@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BoardController">
+   <children>
+      <Canvas fx:id="boardCanvas" height="800.0" width="800.0" />
+      <Group id="moveGroup" fx:id="moveGroup" blendMode="SRC_ATOP" mouseTransparent="true" />
+   </children>
+</AnchorPane>
