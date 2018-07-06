@@ -1,5 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
 
+//TODO: Refactor and standardize
 public class Conversions {
     public static String longToString(long n) {
         return StringUtils.leftPad(Long.toBinaryString(n), 64, '0');
@@ -37,5 +38,10 @@ public class Conversions {
                 pos.charAt(0) <= 'h' &&
                 pos.charAt(1) >= '1' &&
                 pos.charAt(1) <= '8';
+    }
+
+    public static String longToSuare(long position) {
+        //TODO: implement longToSquare
+        return "a1";
     }
 }

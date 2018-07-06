@@ -1,14 +1,8 @@
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Board {
 
@@ -20,7 +14,11 @@ public class Board {
     Map<String, Long> pieces = new HashMap<>();
     Map<String, Character> pieceSymbols = new HashMap<>();
     Map<String, Long> constants = new HashMap<>();
-
+    Map<Character, Boolean> castle = new HashMap<>();
+    long enpassant = 0L;
+    int halfmove = 0;
+    int fullmove = 0;
+    public boolean movingColor = true;
 
     public Board() {
         constants.put("aFile", 0x0101010101010101L);
@@ -40,6 +38,7 @@ public class Board {
         constants.put("7Rank", 0x00FF000000000000L);
         constants.put("8Rank", 0xFF00000000000000L);
         constants.put("edges", 0xFF818181818181FFL);
+//        constants.put("kCastleMask", )
 
         pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
         pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
@@ -54,6 +53,11 @@ public class Board {
         pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackKings", 0b0001000000000000000000000000000000000000000000000000000000000000L);
+
+        castle.put('K', true);
+        castle.put('Q', true);
+        castle.put('k', true);
+        castle.put('q', true);
 
         pieceSymbols.put("whitePawns", 'P');
         pieceSymbols.put("whiteBishops", 'B');
@@ -72,7 +76,7 @@ public class Board {
 
 //        pieceSymbols.put("moves", '*');
 //        pieces.put("moves", knightMoves(pieces.get("whiteKnights") | pieces.get("blackKnights")));
-
+        System.out.println(toFEN());
     }
 
     public Map<String, Long> getPieces() {
@@ -109,7 +113,56 @@ public class Board {
                 }
             }
         });
+
+        for (int i = 0; i < 8; i++) {
+            sb.replace(i * 8, (i + 1) * 8, new StringBuilder(sb.substring(i * 8, (i + 1) * 8)).reverse().toString());
+        }
         return sb.toString().replaceAll("(.{8})", "$1\n");
+    }
+
+    public String toFEN() {
+        StringBuilder sb = new StringBuilder();
+
+        int emptyCount = 0;
+        for (int i = 63; i >= 0; i -= 8) {
+            for (int j = 1; j <= 8; j++) {
+                final int s = (i - 8 + j);
+                String piece = pieces.entrySet()
+                        .stream()
+                        .filter(x -> (x.getValue() & 1L << s) != 0)
+                        .map(x -> pieceSymbols.get(x.getKey()).toString())
+                        .findFirst()
+                        .orElse("0");
+
+                if (piece.equals("0")) {
+                    emptyCount++;
+                } else {
+                    if (emptyCount > 0) {
+                        sb.append(emptyCount);
+                        emptyCount = 0;
+                    }
+                    sb.append(piece);
+                }
+            }
+            if (emptyCount > 0) {
+                sb.append(emptyCount);
+                emptyCount = 0;
+            }
+            sb.append("/");
+        }
+        sb.replace(sb.length() - 1, sb.length(), " ");
+
+        sb.append(movingColor ? "w " : "b ");
+        sb.append(castle.get('K') ? 'K' : "");
+        sb.append(castle.get('Q') ? 'Q' : "");
+        sb.append(castle.get('k') ? 'k' : "");
+        sb.append(castle.get('q') ? 'q' : "");
+        sb.append(sb.charAt(sb.length() - 1) == ' ' ? "- " : " ");
+        sb.append(enpassant == 0 ? "- " : Conversions.longToSuare(enpassant) + " ");
+        sb.append(halfmove).append(" ");
+        sb.append(fullmove);
+
+        return sb.toString();
     }
 
 
@@ -119,6 +172,7 @@ public class Board {
         pieces.entrySet()
                 .stream()
                 .filter(x -> (x.getValue() & target) != 0)
+//                .peek(/*TODO: check for enpassant and castling*/)
                 .findFirst()
                 .ifPresent(x -> pieces.compute(x.getKey(), (k, v) -> v ^ target));
 
@@ -129,26 +183,11 @@ public class Board {
                 .findFirst()
                 .ifPresent(x -> pieces.compute(x.getKey(), (k, v) -> v ^ (start | target)));
 
-        System.out.println(toString());
-    }
+        movingColor = !movingColor;
+//        System.out.println(toString());
+        System.out.println(toFEN());
 
-//
-//    public void drawMoves(long moves, AnchorPane root) {
-//        String mov = Conversions.longToString(moves);
-//        Group moveGroup = ((Group) root.getScene().lookup("#moveGroup"));
-//
-//        moveGroup.getChildren().clear();
-//
-//        for (int i = 0; i < mov.length(); i++) {
-//            if (mov.charAt(mov.length() - 1 - i) == '1') {
-//                Circle c = new Circle(10f, Color.FIREBRICK);
-//                c.setCenterX(i % 8 * SQUARE_WIDTH + SQUARE_WIDTH / 2);
-//                c.setCenterY((7 - Math.floorDiv(i, 8)) * SQUARE_HEIGHT + SQUARE_HEIGHT / 2);
-//                moveGroup.toFront();
-//                moveGroup.getChildren().add(c);
-//            }
-//        }
-//    }
+    }
 
     public long getMoves(long square) {
         String pieceType = pieces.entrySet()
@@ -156,23 +195,23 @@ public class Board {
                 .filter(x -> (x.getValue() & square) != 0)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No piece on square"))
-                .getKey();
+                .getKey()
+                .toLowerCase();
 
-        boolean color = pieceType.contains("white");
-        pieceType = pieceType.toLowerCase();
-
-        if (pieceType.contains("knight")) {
-            return knightMoves(square, color);
+        if (this.movingColor != pieceType.contains("white")) {
+            return 0L;
+        } else if (pieceType.contains("knight")) {
+            return knightMoves(square, this.movingColor);
         } else if (pieceType.contains("rook")) {
-            return rookMoves(square, color);
+            return rookMoves(square, this.movingColor);
         } else if (pieceType.contains("bishop")) {
-            return bishopMoves(square, color);
+            return bishopMoves(square, this.movingColor);
         } else if (pieceType.contains("pawn")) {
-            return pawnMoves(square, color);
+            return pawnMoves(square, this.movingColor);
         } else if (pieceType.contains("king")) {
-            return kingMoves(square, color);
+            return kingMoves(square, this.movingColor);
         } else if (pieceType.contains("queen")) {
-            return queenMoves(square, color);
+            return queenMoves(square, this.movingColor);
         } else return 0L;
     }
 
@@ -208,7 +247,7 @@ public class Board {
 
         //Moves to top
         long temp = positions;
-        while ((temp & (constants.get("8Rank") | (current ^ positions) | opponent)) == 0){
+        while ((temp & (constants.get("8Rank") | (current ^ positions) | opponent)) == 0) {
             temp <<= 8;
             moves |= temp;
         }
@@ -245,7 +284,7 @@ public class Board {
         //Moves to top-left
         long temp = positions;
         while ((temp & (constants.get("aFile") | constants.get("8Rank")
-                | (current ^ positions) | opponent)) == 0 ){
+                | (current ^ positions) | opponent)) == 0) {
             temp <<= 7;
             moves |= temp;
         }
@@ -253,7 +292,7 @@ public class Board {
         //Moves to top-right
         temp = positions;
         while ((temp & (constants.get("hFile") | constants.get("8Rank")
-                | (current ^ positions) | opponent)) == 0){
+                | (current ^ positions) | opponent)) == 0) {
             temp <<= 9;
             moves |= temp;
         }
@@ -261,7 +300,7 @@ public class Board {
         //Moves to bottom-left
         temp = positions;
         while ((temp & (constants.get("aFile") | constants.get("1Rank")
-                | (current ^ positions) | opponent)) == 0){
+                | (current ^ positions) | opponent)) == 0) {
             temp >>= 9;
             moves |= temp;
         }
@@ -269,7 +308,7 @@ public class Board {
         //Moves to bottom-right
         temp = positions;
         while ((temp & (constants.get("hFile") | constants.get("1Rank")
-                | (current ^ positions) | opponent)) == 0){
+                | (current ^ positions) | opponent)) == 0) {
             temp >>= 7;
             moves |= temp;
         }
@@ -294,13 +333,13 @@ public class Board {
             }
         }
 
-        return (moves & ~allPieces()) | (pawnAttacks(positions, color) & colorPieces(!color));
+        return (moves & ~allPieces()) | (pawnAttacks(positions, color) & (colorPieces(!color) | this.enpassant));
     }
 
-    private long pawnAttacks(long positions, boolean color){
+    private long pawnAttacks(long positions, boolean color) {
         long moves = 0L;
 
-        if (color){
+        if (color) {
             moves |= (positions << 9) & ~constants.get("aFile");
             moves |= (positions << 7) & ~constants.get("hFile");
         } else {
@@ -322,11 +361,57 @@ public class Board {
         moves |= ((positions << 7) | (positions >> 9) | (positions >> 1)) & ~constants.get("hFile");
         moves |= (positions << 8) | (positions >> 8);
 
+
         return moves & ~colorPieces(color);
     }
 
-//    private List<Long> possibleMovesToSquare(String pos){
-//
-//    }
+    private void pgnMove(String move) {
+
+    }
+
+//    boolean long castlingMoves
+
+    public long allAttacks(boolean color) {
+        AtomicLong attacks = new AtomicLong(0L);
+        String col = color ? "white" : "black";
+
+        pieces.entrySet()
+                .stream()
+                .filter(x -> x.getKey().contains(col))
+                .forEach(x -> {
+                    for (int i = 0; i < 64; i++) {
+                        if (((1L << i) & x.getValue()) != 0) {
+                            long startPos = 1L << i;
+                            if (x.getKey().contains("Pawns")){
+                                attacks.updateAndGet(v -> v | pawnAttacks(startPos, color));
+                            } else {
+                                attacks.updateAndGet(v -> v | getMoves(startPos));
+                            }
+                        }
+                    }
+                });
+        return attacks.get();
+    }
+
+    //TODO: Check
+    private List<Long> possibleMovesToPosition(long position, boolean color) {
+        String col = color ? "white" : "black";
+        List<Long> possibleMoves = new ArrayList<>();
+        pieces.entrySet()
+                .stream()
+                .filter(x -> x.getKey().contains(col))
+                .forEach(x -> {
+                    long startPos;
+                    for (int i = 0; i < 64; i++) {
+                        startPos = 1L << i;
+                        if ((startPos & x.getValue()) != 0) {
+                            if ((getMoves(startPos) & position) != 0) {
+                                possibleMoves.add(startPos);
+                            }
+                        }
+                    }
+                });
+        return possibleMoves;
+    }
 
 }
