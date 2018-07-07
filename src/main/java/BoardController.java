@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.awt.event.MouseEvent;
@@ -15,6 +16,8 @@ public class BoardController {
 
     public static final double SQUARE_WIDTH = 100d;
     public static final double SQUARE_HEIGHT = 100d;
+    public static final Color DARK_SQUARE_COLOR = Color.DARKGRAY;
+    private static final Color LIGHT_SQUARE_COLOR = Color.MINTCREAM;
 
     @FXML
     private Canvas boardCanvas;
@@ -37,7 +40,7 @@ public class BoardController {
 
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                gc.setFill( color ? Color.MINTCREAM : Color.DARKGRAY);
+                gc.setFill( color ? LIGHT_SQUARE_COLOR : DARK_SQUARE_COLOR);
                 if( x != 7){
                     color = !color;
                 }
@@ -68,6 +71,8 @@ public class BoardController {
 
             String piece = Conversions.longToString(value);
             Group pieceGroup = new Group();
+            pieceGroup.setId("pieceGroup");
+
             for (int i = 0; i < piece.length(); i++) {
                 if (piece.charAt(piece.length() - 1 - i) == '1') {
                     String type = key.substring(0, key.length() - 1);
@@ -96,6 +101,7 @@ public class BoardController {
                         drawMoves(board.getMoves(Conversions.squareToLong(pieceId.split("#")[1])), root);
 
                         p.setCursor(Cursor.MOVE);
+
                     });
 
                     p.setOnMouseDragged(mouseEvent -> {

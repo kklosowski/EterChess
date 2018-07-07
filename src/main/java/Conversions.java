@@ -40,8 +40,23 @@ public class Conversions {
                 pos.charAt(1) <= '8';
     }
 
-    public static String longToSuare(long position) {
+    public static String longToSquare(long position) {
         //TODO: implement longToSquare
-        return "a1";
+        return "xx";
+    }
+
+    public static String longToGrid(long positions){
+        StringBuilder sb = new StringBuilder("0000000000000000000000000000000000000000000000000000000000000000");
+            String piece = Conversions.longToString(positions).replace('1', '*');
+            for (int i = 0; i < piece.length(); i++) {
+                if (piece.charAt(i) != '0') {
+                    sb.setCharAt(i, piece.charAt(i));
+                }
+            }
+
+        for (int i = 0; i < 8; i++) {
+            sb.replace(i * 8, (i + 1) * 8, new StringBuilder(sb.substring(i * 8, (i + 1) * 8)).reverse().toString());
+        }
+        return sb.toString().replaceAll("(.{8})", "$1\n");
     }
 }
