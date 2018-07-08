@@ -8,5 +8,6 @@
    <children>
       <Canvas fx:id="boardCanvas" height="800.0" width="800.0" />
       <Group id="moveGroup" fx:id="moveGroup" blendMode="SRC_ATOP" mouseTransparent="true" />
+      <Group id="pieceGroup" fx:id="pieceGroup" />
    </children>
 </AnchorPane>

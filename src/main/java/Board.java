@@ -42,23 +42,23 @@ public class Board {
 
         constants.put("QCastleMask", 0b0000000000000000000000000000000000000000000000000000000000001110L);
         constants.put("KCastleMask", 0b0000000000000000000000000000000000000000000000000000000001100000L);
-        constants.put("qCastleMask", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        constants.put("kCastleMask", 0b0110111000000000000000000000000000000000000000000000000000000000L);
+        constants.put("qCastleMask", 0b0000111000000000000000000000000000000000000000000000000000000000L);
+        constants.put("kCastleMask", 0b0110000000000000000000000000000000000000000000000000000000000000L);
         constants.put("KRookCastleMask", 0b0000000000000000000000000000000000000000000000000000000010100000L);
         constants.put("QRookCastleMask", 0b0000000000000000000000000000000000000000000000000000000000001001L);
         constants.put("kRookCastleMask", 0b1010000000000000000000000000000000000000000000000000000000000000L);
         constants.put("qRookCastleMask", 0b0000100100000000000000000000000000000000000000000000000000000000L);
 
-//        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
-//        pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
-//        pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
+        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
+        pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
+        pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
         pieces.put("whiteRooks", 0b0000000000000000000000000000000000000000000000000000000010000001L);
         pieces.put("whiteQueens", 0b0000000000000000000000000000000000000000000000000000000000001000L);
         pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
 
-//        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
+        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackKings", 0b0001000000000000000000000000000000000000000000000000000000000000L);
@@ -90,6 +90,10 @@ public class Board {
 
     public Map<String, Long> getPieces() {
         return pieces;
+    }
+
+    public Map<String, Long> getConstants() {
+        return constants;
     }
 
     private long allPieces() {
@@ -206,6 +210,7 @@ public class Board {
                 .stream()
                 .filter(x -> (x.getValue() & start) != 0)
                 .peek(x -> {
+                    //Enpassant and promotions
                     if (x.getKey().contains("Pawn")) {
                         halfmove = 0;
                         if ((start << 16) == target) {
@@ -222,7 +227,7 @@ public class Board {
                             System.out.println("promotion black");
                         }
                     }
-                    //Rook move castling
+                    //Move rook while castling
                     if (x.getKey().contains("King")) {
                         if (x.getKey().contains("white")) {
                             if ((start << 2) == target) {
@@ -233,8 +238,7 @@ public class Board {
                             }
                             castle.replace('K', false);
                             castle.replace('Q', false);
-                        }
-                        if (x.getKey().contains("black")) {
+                        } else if (x.getKey().contains("black")) {
                             if ((start << 2) == target) {
                                 pieces.compute("blackRooks", (k, v) -> v ^ constants.get("kRookCastleMask"));
                             }
@@ -245,10 +249,19 @@ public class Board {
                             castle.replace('q', false);
                         }
                     }
+                    //Disable castling if rook moves
                     if (x.getKey().contains("Rook")) {
-                        if (x.getKey().contains("white")){
+                            if ((start & Conversions.squareToLong("A1")) != 0){
+                                castle.replace('Q', false);
+                            } else if ((start & Conversions.squareToLong("H1")) != 0){
+                                castle.replace('K', false);
+                            } else if ((start & Conversions.squareToLong("A8")) != 0){
+                                castle.replace('q', false);
+                            } else if ((start & Conversions.squareToLong("H8")) != 0){
+                                castle.replace('k', false);
+                            }
                         }
-                    }
+
                 })
                 .findFirst()
                 .ifPresent(x -> pieces.compute(x.getKey(), (k, v) -> v ^ (start | target)));
@@ -264,7 +277,6 @@ public class Board {
         movingColor = !movingColor;
 
 //        System.out.println(toString());
-
         System.out.println(toFEN());
     }
 
@@ -313,13 +325,6 @@ public class Board {
     }
 
     private long rookMoves(long positions, boolean color) {
-//        return constants.entrySet()
-//                .stream()
-//                .filter(x -> x.getKey().contains("Rank") || x.getKey().contains("File"))
-//                .filter(x -> (x.getValue() & rooks) != 0)
-//                .mapToLong(Map.Entry::getValue)
-//                .reduce(0L, (x, y) -> (x | y) & ~colorPieces(color));
-
         long moves = 0L;
         long current = colorPieces(color);
         long opponent = colorPieces(!color);
@@ -441,7 +446,6 @@ public class Board {
         moves |= ((positions << 7) | (positions >> 9) | (positions >> 1)) & ~constants.get("hFile");
         moves |= (positions << 8) | (positions >> 8);
 
-        //TODO: Update castling boolean
         if (color == WHITE) {
             if (castle.get('K') && (constants.get("KCastleMask") & (blackAttacks | colorPieces(WHITE))) == 0) {
                 moves |= positions << 2;
@@ -508,6 +512,12 @@ public class Board {
                     }
                 });
         return possibleMoves;
+    }
+
+    public void promotion(String promotionType, long square, boolean color){
+        String col = color ? "white" : "black";
+        pieces.compute(col + "Pawns", (k, v) -> v ^ square);
+        pieces.compute(promotionType, (k, v) -> v | square);
     }
 
 }
