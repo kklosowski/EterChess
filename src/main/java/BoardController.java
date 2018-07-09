@@ -134,6 +134,10 @@ public class BoardController {
 
                             board.move(selectedPosition, targetPosition);
 
+                            if (board.isInCheck(board.movingColor)){
+                                System.out.println((board.movingColor ? "white" : "black") + "check");
+                            }
+
                             p.setId(p.getId().split("#")[0] + "#" + Conversions.posToSquare(targetPosition));
                             ((Group) root.getScene().lookup("#moveGroup")).getChildren().clear();
 
@@ -158,8 +162,7 @@ public class BoardController {
         Pane promotionPane = new Pane();
         promotionPane.setBackground(new Background(new BackgroundFill(Color.STEELBLUE, null, null)));
         AtomicInteger position = new AtomicInteger(0);
-        promotionPane.setLayoutX(100d);
-        promotionPane.setLayoutY(100d);
+
 
         board.getPieces()
                 .keySet()
@@ -172,6 +175,8 @@ public class BoardController {
                             true,
                             true
                     ));
+                    promotionPane.setLayoutX(200d);
+                    promotionPane.setLayoutY(color ? 100d : 600d);
                     p.setLayoutX(SQUARE_WIDTH * position.getAndUpdate(x -> x + 1));
                     p.setLayoutY(0);
                     p.setCursor(Cursor.HAND);

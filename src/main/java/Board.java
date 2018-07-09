@@ -20,6 +20,10 @@ public class Board {
     int fullmove = 0;
     long blackAttacks;
     long whiteAttacks;
+    long whiteKingDanger;
+    long blackKingDanger;
+
+    //TODO: Pinned pieces check
 
     public Board() {
         constants.put("aFile", 0x0101010101010101L);
@@ -100,7 +104,11 @@ public class Board {
         return colorPieces(true) | colorPieces(false);
     }
 
-    private long colorPieces(boolean color) {
+    private long colorPieces(boolean color){
+        return colorPieces(color, true);
+    }
+
+    private long colorPieces(boolean color, boolean king) {
         String col;
         if (color) {
             col = "white";
@@ -111,6 +119,7 @@ public class Board {
         pieces.entrySet()
                 .stream()
                 .filter(x -> x.getKey().contains(col))
+                .filter(x -> king || !x.getKey().contains("King"))
                 .forEach(x -> all[0] |= x.getValue());
         return all[0];
     }
@@ -178,6 +187,10 @@ public class Board {
         return sb.toString();
     }
 
+    private void pgnMove(String move) {
+
+    }
+
 
     public void move(long start, long target) {
 
@@ -219,12 +232,6 @@ public class Board {
                             enpassant = (start >> 8);
                         } else {
                             enpassant = 0L;
-                        }
-                        if ((target & constants.get("8Rank")) != 0) {
-                            System.out.println("promotion white");
-                        }
-                        if ((target & constants.get("1Rank")) != 0) {
-                            System.out.println("promotion black");
                         }
                     }
                     //Move rook while castling
@@ -268,8 +275,10 @@ public class Board {
 
         if (movingColor == WHITE) {
             whiteAttacks = allAttacks(WHITE);
+            blackKingDanger = kingDangerSquares(BLACK);
         } else {
             blackAttacks = allAttacks(BLACK);
+            whiteKingDanger = kingDangerSquares(WHITE);
         }
 
         halfmove++;
@@ -462,14 +471,11 @@ public class Board {
             }
         }
 
-        return moves & ~colorPieces(color);
+        System.out.println(Conversions.longToGrid(kingDangerSquares(color)));
+        long kingDanger = color ? whiteKingDanger : blackKingDanger;
+
+        return moves & ~colorPieces(color) & ~kingDanger ;
     }
-
-    private void pgnMove(String move) {
-
-    }
-
-//    boolean long castlingMoves
 
     public long allAttacks(boolean color) {
         final long[] attacks = {0L};
@@ -491,6 +497,27 @@ public class Board {
                     }
                 });
         return attacks[0];
+    }
+
+    public long kingDangerSquares(boolean color){
+        String kingKey = color ? "whiteKings" : "blackKings";
+
+        //Temporarily remove the king to calculate danger squares
+        long kingTemp = pieces.get(kingKey);
+        pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
+
+        long dangerSquares = allAttacks(!color);
+        pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
+
+        return dangerSquares;
+    }
+
+    public boolean isInCheck(boolean color){
+        if (color){
+            return (blackAttacks & pieces.get("whiteKings")) != 0;
+        }else {
+            return (whiteAttacks & pieces.get("blackKings")) != 0;
+        }
     }
 
     //TODO: Check
