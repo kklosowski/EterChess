@@ -3,6 +3,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -72,6 +73,7 @@ public class BoardController {
 
     public void drawPieces(AnchorPane root) {
 
+        System.out.println(Conversions.longToGrid(board.getPinnedSquares(board.movingColor)));
         pieceGroup.getChildren().clear();
         board.getPieces().forEach((key, value) -> {
 
@@ -134,9 +136,6 @@ public class BoardController {
 
                             board.move(selectedPosition, targetPosition);
 
-//                            if (board.isInCheck(board.movingColor)){
-//                                System.out.println((board.movingColor ? "white" : "black") + "check");
-//                            }
 
                             p.setId(p.getId().split("#")[0] + "#" + Conversions.posToSquare(targetPosition));
                             ((Group) root.getScene().lookup("#moveGroup")).getChildren().clear();
@@ -150,11 +149,23 @@ public class BoardController {
                         }
                     });
 
+
                     pieceGroup.getChildren().add(p);
+
                 }
             }
-//            root.getChildren().add(pieceGroup);
         });
+
+        //Check glow
+        String king = (board.movingColor ? "white" : "black") + "Kings";
+        String kingPos = Conversions.posToSquare(Conversions.longToBitIndex(board.pieces.get(king)));
+        ImageView kingIV = (ImageView) pieceGroup.lookup("#" + king.substring(0, king.length() - 1) + "#" + kingPos);
+
+        if (board.isInCheck(board.movingColor)) {
+            kingIV.setEffect(new DropShadow(40, Color.RED));
+        } else {
+            kingIV.setEffect(null);
+        }
     }
 
     public void drawPromotion(boolean color, long square) {

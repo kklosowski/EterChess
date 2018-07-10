@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Conversions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conversions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BoardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BoardController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,14 +47,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoardController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BoardController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="136" selection-start-line="136" selection-start-column="2" selection-end-line="138" selection-end-column="31" />
+            <state relative-caret-position="470">
+              <caret line="158" column="20" selection-start-line="158" selection-start-column="20" selection-end-line="158" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
               </folding>
             </state>
           </provider>
@@ -71,11 +71,11 @@
       <file leaf-file-name="Conversions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+            <state relative-caret-position="357">
+              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
               <folding>
-                <element signature="e#677#678#0" expanded="true" />
-                <element signature="e#730#731#0" expanded="true" />
+                <element signature="e#925#926#0" expanded="true" />
+                <element signature="e#978#979#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,11 +91,11 @@
           <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
-              <caret line="284" selection-start-line="284" selection-end-line="286" selection-end-column="21" />
+            <state relative-caret-position="-1383">
+              <caret line="286" selection-start-line="286" selection-start-column="2" selection-end-line="292" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3567#3568#0" expanded="true" />
@@ -115,8 +115,8 @@
                 <element signature="method#pawnMoves#0;class#Board#0" />
                 <element signature="method#pawnAttacks#0;class#Board#0" />
                 <element signature="method#queenMoves#0;class#Board#0" />
-                <element signature="e#21531#21532#0" expanded="true" />
-                <element signature="e#21555#21556#0" expanded="true" />
+                <element signature="e#21514#21515#0" expanded="true" />
+                <element signature="e#21538#21539#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -204,9 +204,9 @@
         <option value="$PROJECT_DIR$/src/main/java/Point.java" />
         <option value="$PROJECT_DIR$/src/main/resources/views/board.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/BoardController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Conversions.java" />
         <option value="$PROJECT_DIR$/src/main/java/Board.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Conversions.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BoardController.java" />
       </list>
     </option>
   </component>
@@ -228,7 +228,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="55" />
-    <option name="width" value="1972" />
+    <option name="width" value="1963" />
     <option name="height" value="1447" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -395,12 +395,12 @@
       <workItem from="1528845765958" duration="6947000" />
       <workItem from="1529888361193" duration="316000" />
       <workItem from="1529888723868" duration="1350000" />
-      <workItem from="1529935596017" duration="123499000" />
+      <workItem from="1529935596017" duration="129306000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146020000" />
+    <option name="totallyTimeSpent" value="151827000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -412,7 +412,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="0" width="1972" height="1447" extended-state="0" />
+    <frame x="55" y="0" width="1963" height="1447" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -436,7 +436,7 @@
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21466768" />
       <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3295858" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19508368" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19600631" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -503,8 +503,8 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -544,7 +544,6 @@
           <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
           </folding>
         </state>
       </provider>
@@ -618,8 +617,8 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -690,8 +689,8 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -762,8 +761,8 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -834,8 +833,8 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -932,32 +931,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="136" selection-start-line="136" selection-start-column="2" selection-end-line="138" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+        <state relative-caret-position="357">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
           <folding>
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#730#731#0" expanded="true" />
+            <element signature="e#925#926#0" expanded="true" />
+            <element signature="e#978#979#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="284" selection-start-line="284" selection-end-line="286" selection-end-column="21" />
+        <state relative-caret-position="-1383">
+          <caret line="286" selection-start-line="286" selection-start-column="2" selection-end-line="292" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3567#3568#0" expanded="true" />
@@ -977,8 +965,18 @@
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21531#21532#0" expanded="true" />
-            <element signature="e#21555#21556#0" expanded="true" />
+            <element signature="e#21514#21515#0" expanded="true" />
+            <element signature="e#21538#21539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="158" column="20" selection-start-line="158" selection-start-column="20" selection-end-line="158" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

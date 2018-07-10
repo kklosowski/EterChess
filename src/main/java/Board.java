@@ -231,7 +231,6 @@ public class Board {
                 .stream()
                 .filter(x -> (x.getValue() & start) != 0)
                 .peek(x -> {
-                    //TODO: fix same color enpassant, reset enpassant when not used
                     //Enpassant and promotions
                     if (x.getKey().contains("Pawn")) {
                         halfmove = 0;
@@ -285,13 +284,13 @@ public class Board {
                     if (!x.getKey().contains("Pawn")) {
                         enpassant = 0L;
                     }
-                    //TODO: this
-                    if (isInCheck(!movingColor)){
-                        System.out.println("check");
-                        checkCaptureMask = target;
-                    } else {
-                        checkCaptureMask = ~0L;
-                    }
+//                    //TODO: this
+//                    if (isInCheck(!movingColor)){
+//                        System.out.println("check");
+//                        checkCaptureMask = target;
+//                    } else {
+//                        checkCaptureMask = ~0L;
+//                    }
                 });
 
 
@@ -315,14 +314,14 @@ public class Board {
         String pieceType = pieces.entrySet()
                 .stream()
                 .filter(x -> (x.getValue() & square) != 0)
+                .map(Map.Entry::getKey)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No piece on square"))
-                .getKey()
+                .orElse("empty")
                 .toLowerCase();
 
         long moves;
 
-        if (this.movingColor != pieceType.contains("white")) {
+        if (this.movingColor != pieceType.contains("white") | pieceType.equals("empty")) {
             moves = 0L;
         } else if (pieceType.contains("knight")) {
             moves = knightMoves(square, this.movingColor);
@@ -338,11 +337,11 @@ public class Board {
             moves = queenMoves(square, this.movingColor);
         } else moves = 0L;
 
-        //TODO: this
-        if (isInCheck(movingColor)){
-            System.out.println(Conversions.longToString(checkCaptureMask));
-            moves &= checkCaptureMask;
-        }
+//        //TODO: this
+//        if (isInCheck(movingColor)){
+//            System.out.println(Conversions.longToString(checkCaptureMask));
+//            moves &= checkCaptureMask;
+//        }
 
         return moves;
     }
@@ -581,6 +580,22 @@ public class Board {
         String col = color ? "white" : "black";
         pieces.compute(col + "Pawns", (k, v) -> v ^ square);
         pieces.compute(promotionType, (k, v) -> v | square);
+    }
+
+    public long getPinnedSquares(boolean color){
+        long pinned = 0L;
+        String col = color ? "white" : "black";
+        String oppCol = color ? "white" : "black";
+
+        for (int i = 0; i < 64; i++) {
+            pinned |= getMoves(pieces.get(oppCol + "Rooks") & (1L << i));
+            pinned |= getMoves(pieces.get(oppCol + "Bishops") & (1L << i));
+            pinned |= getMoves(pieces.get(oppCol + "Queens") & (1L << i));
+        }
+
+        pinned &= queenMoves(pieces.get(col + "Kings"), color);
+
+        return pinned;
     }
 
 }

@@ -15,6 +15,15 @@ public class Conversions {
         }
     }
 
+    public static long longToBitIndex(long pos){
+        for (int i = 0; i < 63; i++) {
+            if ((pos & (1L << i)) != 0){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static String posToSquare(long pos) {
         String square = "";
         square += (char) (pos % 8 + 97);
