@@ -22,6 +22,8 @@ public class Board {
     long whiteAttacks;
     long whiteKingDanger;
     long blackKingDanger;
+    long checkBlockMask;
+    long checkCaptureMask;
 
     //TODO: Pinned pieces check
 
@@ -198,8 +200,10 @@ public class Board {
         pieces.entrySet()
                 .stream()
                 .filter(x -> {
-                    if (x.getKey().contains("Pawn")) {
-                        return ((x.getValue() | enpassant) & target) != 0;
+                    if (x.getKey().contains("whitePawns")) {
+                        return ((x.getValue() | (enpassant & constants.get("3Rank"))) & target) != 0;
+                    } else if (x.getKey().contains("blackPawns")){
+                        return ((x.getValue() | (enpassant & constants.get("6Rank"))) & target) != 0;
                     } else {
                         return (x.getValue() & target) != 0;
                     }
@@ -208,9 +212,13 @@ public class Board {
                 .ifPresent(x -> {
                     if ((target & enpassant) != 0) {
                         if (start > enpassant) {
-                            pieces.compute(x.getKey(), (k, v) -> v ^ target << 8);
+                            pieces.compute(x.getKey(), (k, v) -> v ^ (target << 8));
+                            System.out.println(x.getKey());
+                            System.out.println("black enpassant capture");
                         } else {
-                            pieces.compute(x.getKey(), (k, v) -> v ^ target >> 8);
+                            pieces.compute(x.getKey(), (k, v) -> v ^ (target >> 8));
+                            System.out.println("white enpassant capture");
+
                         }
                     } else {
                         pieces.compute(x.getKey(), (k, v) -> v ^ target);
@@ -223,6 +231,7 @@ public class Board {
                 .stream()
                 .filter(x -> (x.getValue() & start) != 0)
                 .peek(x -> {
+                    //TODO: fix same color enpassant, reset enpassant when not used
                     //Enpassant and promotions
                     if (x.getKey().contains("Pawn")) {
                         halfmove = 0;
@@ -271,7 +280,20 @@ public class Board {
 
                 })
                 .findFirst()
-                .ifPresent(x -> pieces.compute(x.getKey(), (k, v) -> v ^ (start | target)));
+                .ifPresent(x -> {
+                    pieces.compute(x.getKey(), (k, v) -> v ^ (start | target));
+                    if (!x.getKey().contains("Pawn")) {
+                        enpassant = 0L;
+                    }
+                    //TODO: this
+                    if (isInCheck(!movingColor)){
+                        System.out.println("check");
+                        checkCaptureMask = target;
+                    } else {
+                        checkCaptureMask = ~0L;
+                    }
+                });
+
 
         if (movingColor == WHITE) {
             whiteAttacks = allAttacks(WHITE);
@@ -298,21 +320,31 @@ public class Board {
                 .getKey()
                 .toLowerCase();
 
+        long moves;
+
         if (this.movingColor != pieceType.contains("white")) {
-            return 0L;
+            moves = 0L;
         } else if (pieceType.contains("knight")) {
-            return knightMoves(square, this.movingColor);
+            moves = knightMoves(square, this.movingColor);
         } else if (pieceType.contains("rook")) {
-            return rookMoves(square, this.movingColor);
+            moves = rookMoves(square, this.movingColor);
         } else if (pieceType.contains("bishop")) {
-            return bishopMoves(square, this.movingColor);
+            moves = bishopMoves(square, this.movingColor);
         } else if (pieceType.contains("pawn")) {
-            return pawnMoves(square, this.movingColor);
+            moves = pawnMoves(square, this.movingColor);
         } else if (pieceType.contains("king")) {
-            return kingMoves(square, this.movingColor);
+            moves = kingMoves(square, this.movingColor);
         } else if (pieceType.contains("queen")) {
-            return queenMoves(square, this.movingColor);
-        } else return 0L;
+            moves = queenMoves(square, this.movingColor);
+        } else moves = 0L;
+
+        //TODO: this
+        if (isInCheck(movingColor)){
+            System.out.println(Conversions.longToString(checkCaptureMask));
+            moves &= checkCaptureMask;
+        }
+
+        return moves;
     }
 
     private long knightMoves(long positions, boolean color) {
@@ -471,7 +503,7 @@ public class Board {
             }
         }
 
-        System.out.println(Conversions.longToGrid(kingDangerSquares(color)));
+//        System.out.println(Conversions.longToGrid(kingDangerSquares(color)));
         long kingDanger = color ? whiteKingDanger : blackKingDanger;
 
         return moves & ~colorPieces(color) & ~kingDanger ;
@@ -518,6 +550,10 @@ public class Board {
         }else {
             return (whiteAttacks & pieces.get("blackKings")) != 0;
         }
+    }
+
+    private int squareAttackersCount(){
+        return 0;
     }
 
     //TODO: Check

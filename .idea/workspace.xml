@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/Board.java" line="151" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/Board.java" line="153" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24705422-76d3-42b0-9f4c-28857fa9ab71" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Conversions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conversions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,8 +37,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" selection-start-line="8" selection-end-line="9" selection-end-column="45" />
+            <state relative-caret-position="272">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,11 +49,11 @@
       <file leaf-file-name="BoardController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="136" column="41" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="41" />
+            <state relative-caret-position="317">
+              <caret line="136" selection-start-line="136" selection-start-column="2" selection-end-line="138" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1531064596675" expanded="true" signature="6327:6374" ph="..." />
+                <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
               </folding>
             </state>
           </provider>
@@ -68,8 +71,8 @@
       <file leaf-file-name="Conversions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+            <state relative-caret-position="572">
+              <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
               <folding>
                 <element signature="e#677#678#0" expanded="true" />
                 <element signature="e#730#731#0" expanded="true" />
@@ -91,8 +94,8 @@
       <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+            <state relative-caret-position="596">
+              <caret line="284" selection-start-line="284" selection-end-line="286" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3567#3568#0" expanded="true" />
@@ -107,12 +110,13 @@
                 <element signature="e#4830#5128#0" />
                 <element signature="method#toFEN#0;class#Board#0" />
                 <element signature="method#pgnMove#0;class#Board#0" />
-                <element signature="method#knightMoves#0;class#Board#0" />
                 <element signature="method#rookMoves#0;class#Board#0" />
                 <element signature="method#bishopMoves#0;class#Board#0" />
                 <element signature="method#pawnMoves#0;class#Board#0" />
                 <element signature="method#pawnAttacks#0;class#Board#0" />
                 <element signature="method#queenMoves#0;class#Board#0" />
+                <element signature="e#21531#21532#0" expanded="true" />
+                <element signature="e#21555#21556#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -174,6 +178,9 @@
       <find>System.out.println(&quot;PROMOTION</find>
       <find>System.out.println</find>
       <find>whiteKing</find>
+      <find>return</find>
+      <find>col + check</find>
+      <find>grid</find>
     </findStrings>
     <replaceStrings>
       <replace>piece</replace>
@@ -194,11 +201,11 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/resources/views/Board.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/Point.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Conversions.java" />
         <option value="$PROJECT_DIR$/src/main/resources/views/board.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/BoardController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Conversions.java" />
         <option value="$PROJECT_DIR$/src/main/java/Board.java" />
       </list>
     </option>
@@ -221,7 +228,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="55" />
-    <option name="width" value="1970" />
+    <option name="width" value="1972" />
     <option name="height" value="1447" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -388,12 +395,12 @@
       <workItem from="1528845765958" duration="6947000" />
       <workItem from="1529888361193" duration="316000" />
       <workItem from="1529888723868" duration="1350000" />
-      <workItem from="1529935596017" duration="118624000" />
+      <workItem from="1529935596017" duration="123499000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141145000" />
+    <option name="totallyTimeSpent" value="146020000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,7 +412,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="0" width="1970" height="1447" extended-state="0" />
+    <frame x="55" y="0" width="1972" height="1447" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -429,7 +436,7 @@
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21466768" />
       <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3295858" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19528796" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19508368" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -450,6 +457,10 @@
     <breakpoint-manager>
       <option name="time" value="6" />
     </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pom.xml">
@@ -487,12 +498,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -532,7 +544,7 @@
           <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1531064596675" expanded="true" signature="6327:6374" ph="..." />
+            <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
           </folding>
         </state>
       </provider>
@@ -601,12 +613,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -672,12 +685,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -743,12 +757,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -814,12 +829,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -901,21 +917,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="9" selection-end-column="45" />
+        <state relative-caret-position="272">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
-          <folding>
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#730#731#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -929,19 +934,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="136" column="41" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="41" />
+        <state relative-caret-position="317">
+          <caret line="136" selection-start-line="136" selection-start-column="2" selection-end-line="138" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1531064596675" expanded="true" signature="6327:6374" ph="..." />
+            <marker date="1531183428396" expanded="true" signature="6333:6380" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+          <folding>
+            <element signature="e#677#678#0" expanded="true" />
+            <element signature="e#730#731#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+        <state relative-caret-position="596">
+          <caret line="284" selection-start-line="284" selection-end-line="286" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3567#3568#0" expanded="true" />
@@ -956,12 +972,13 @@
             <element signature="e#4830#5128#0" />
             <element signature="method#toFEN#0;class#Board#0" />
             <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#knightMoves#0;class#Board#0" />
             <element signature="method#rookMoves#0;class#Board#0" />
             <element signature="method#bishopMoves#0;class#Board#0" />
             <element signature="method#pawnMoves#0;class#Board#0" />
             <element signature="method#pawnAttacks#0;class#Board#0" />
             <element signature="method#queenMoves#0;class#Board#0" />
+            <element signature="e#21531#21532#0" expanded="true" />
+            <element signature="e#21555#21556#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -134,9 +134,9 @@ public class BoardController {
 
                             board.move(selectedPosition, targetPosition);
 
-                            if (board.isInCheck(board.movingColor)){
-                                System.out.println((board.movingColor ? "white" : "black") + "check");
-                            }
+//                            if (board.isInCheck(board.movingColor)){
+//                                System.out.println((board.movingColor ? "white" : "black") + "check");
+//                            }
 
                             p.setId(p.getId().split("#")[0] + "#" + Conversions.posToSquare(targetPosition));
                             ((Group) root.getScene().lookup("#moveGroup")).getChildren().clear();

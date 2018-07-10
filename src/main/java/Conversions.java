@@ -42,6 +42,7 @@ public class Conversions {
 
     public static String longToSquare(long position) {
         //TODO: implement longToSquare
+//        System.out.println(longToGrid(position));
         return "xx";
     }
 
