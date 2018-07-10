@@ -55,14 +55,16 @@ public class Board {
         constants.put("kRookCastleMask", 0b1010000000000000000000000000000000000000000000000000000000000000L);
         constants.put("qRookCastleMask", 0b0000100100000000000000000000000000000000000000000000000000000000L);
 
-        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
+//        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
+        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
         pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
         pieces.put("whiteRooks", 0b0000000000000000000000000000000000000000000000000000000010000001L);
         pieces.put("whiteQueens", 0b0000000000000000000000000000000000000000000000000000000000001000L);
         pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
 
-        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
+        pieces.put("blackPawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
@@ -323,7 +325,7 @@ public class Board {
 
         if (this.movingColor != pieceType.contains("white") | pieceType.equals("empty")) {
             moves = 0L;
-        } else if (pieceType.contains("knight")) {
+        }  else if (pieceType.contains("knight")) {
             moves = knightMoves(square, this.movingColor);
         } else if (pieceType.contains("rook")) {
             moves = rookMoves(square, this.movingColor);
@@ -332,10 +334,14 @@ public class Board {
         } else if (pieceType.contains("pawn")) {
             moves = pawnMoves(square, this.movingColor);
         } else if (pieceType.contains("king")) {
-            moves = kingMoves(square, this.movingColor);
+            return kingMoves(square, this.movingColor);
         } else if (pieceType.contains("queen")) {
             moves = queenMoves(square, this.movingColor);
         } else moves = 0L;
+
+        if (isInCheck(movingColor)){
+            moves &= getCheckingPieces(movingColor);
+        }
 
 //        //TODO: this
 //        if (isInCheck(movingColor)){
@@ -582,10 +588,28 @@ public class Board {
         pieces.compute(promotionType, (k, v) -> v | square);
     }
 
+    public long getCheckingPieces(boolean color){
+        String col = color ? "white" : "black";
+        String oppCol = color ? "black" : "white";
+
+
+        long checkers = 0L;
+
+        checkers |= (queenMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Queens"));
+        checkers |= (bishopMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Bishops"));
+        checkers |= (rookMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Rooks"));
+        checkers |= (knightMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Knights"));
+        checkers |= (pawnAttacks(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Pawns"));
+
+
+        return checkers;
+    }
+
+
     public long getPinnedSquares(boolean color){
         long pinned = 0L;
         String col = color ? "white" : "black";
-        String oppCol = color ? "white" : "black";
+        String oppCol = color ? "black" : "white";
 
         for (int i = 0; i < 64; i++) {
             pinned |= getMoves(pieces.get(oppCol + "Rooks") & (1L << i));

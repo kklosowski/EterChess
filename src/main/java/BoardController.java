@@ -73,7 +73,6 @@ public class BoardController {
 
     public void drawPieces(AnchorPane root) {
 
-        System.out.println(Conversions.longToGrid(board.getPinnedSquares(board.movingColor)));
         pieceGroup.getChildren().clear();
         board.getPieces().forEach((key, value) -> {
 
@@ -166,6 +165,8 @@ public class BoardController {
         } else {
             kingIV.setEffect(null);
         }
+
+        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
     }
 
     public void drawPromotion(boolean color, long square) {
