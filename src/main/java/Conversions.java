@@ -1,5 +1,8 @@
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //TODO: Refactor and standardize
 public class Conversions {
     public static String longToString(long n) {
@@ -68,5 +71,27 @@ public class Conversions {
             sb.replace(i * 8, (i + 1) * 8, new StringBuilder(sb.substring(i * 8, (i + 1) * 8)).reverse().toString());
         }
         return sb.toString().replaceAll("(.{8})", "$1\n");
+    }
+
+    public static long bitCount(long pos){
+        int count = 0;
+        for (int i = 0; i < 64; i++) {
+            if ((pos & (1L << i)) != 0){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static List<Long> separateBits(long pos){
+        List<Long> separated = new ArrayList<>();
+
+        for (int i = 0; i < 64; i++) {
+            if ((pos & (1L << i)) != 0){
+                separated.add(1L << i);
+            }
+        }
+
+        return separated;
     }
 }

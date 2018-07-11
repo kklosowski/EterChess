@@ -166,7 +166,8 @@ public class BoardController {
             kingIV.setEffect(null);
         }
 
-        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
+//        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
+//        System.out.println(Conversions.longToGrid(board.checkBlockMask));
     }
 
     public void drawPromotion(boolean color, long square) {

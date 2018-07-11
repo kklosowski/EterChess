@@ -215,12 +215,8 @@ public class Board {
                     if ((target & enpassant) != 0) {
                         if (start > enpassant) {
                             pieces.compute(x.getKey(), (k, v) -> v ^ (target << 8));
-                            System.out.println(x.getKey());
-                            System.out.println("black enpassant capture");
                         } else {
                             pieces.compute(x.getKey(), (k, v) -> v ^ (target >> 8));
-                            System.out.println("white enpassant capture");
-
                         }
                     } else {
                         pieces.compute(x.getKey(), (k, v) -> v ^ target);
@@ -286,13 +282,6 @@ public class Board {
                     if (!x.getKey().contains("Pawn")) {
                         enpassant = 0L;
                     }
-//                    //TODO: this
-//                    if (isInCheck(!movingColor)){
-//                        System.out.println("check");
-//                        checkCaptureMask = target;
-//                    } else {
-//                        checkCaptureMask = ~0L;
-//                    }
                 });
 
 
@@ -303,6 +292,7 @@ public class Board {
             blackAttacks = allAttacks(BLACK);
             whiteKingDanger = kingDangerSquares(WHITE);
         }
+
 
         halfmove++;
         if (!movingColor) fullmove++;
@@ -339,15 +329,16 @@ public class Board {
             moves = queenMoves(square, this.movingColor);
         } else moves = 0L;
 
-        if (isInCheck(movingColor)){
-            moves &= getCheckingPieces(movingColor);
-        }
 
-//        //TODO: this
-//        if (isInCheck(movingColor)){
-//            System.out.println(Conversions.longToString(checkCaptureMask));
-//            moves &= checkCaptureMask;
-//        }
+        //TODO: Gibberish
+        if (isInCheck(movingColor)){
+            if (Conversions.bitCount(getCheckingPieces(movingColor)) > 1){
+                return 0L;
+            } else {
+                System.out.println(Conversions.longToGrid(getCheckBlockSquares(movingColor)));
+                moves &= (getCheckingPieces(movingColor) | getCheckBlockSquares(movingColor));
+            }
+        }
 
         return moves;
     }
@@ -508,7 +499,6 @@ public class Board {
             }
         }
 
-//        System.out.println(Conversions.longToGrid(kingDangerSquares(color)));
         long kingDanger = color ? whiteKingDanger : blackKingDanger;
 
         return moves & ~colorPieces(color) & ~kingDanger ;
@@ -533,6 +523,7 @@ public class Board {
                         }
                     }
                 });
+
         return attacks[0];
     }
 
@@ -601,11 +592,33 @@ public class Board {
         checkers |= (knightMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Knights"));
         checkers |= (pawnAttacks(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Pawns"));
 
-
         return checkers;
     }
 
+    public long getCheckBlockSquares(boolean color){
+        String col = color ? "white" : "black";
+        String oppCol = color ? "black" : "white";
 
+        final long[] blocks = {0L};
+
+        Conversions.separateBits(getCheckingPieces(color)).forEach(x -> {
+            if ((x & (pieces.get(oppCol + "Rooks"))) != 0){
+                blocks[0] |= (rookMoves(pieces.get(col + "Kings"), color) & rookMoves(pieces.get(oppCol + "Rooks"), !color));
+            } else if ((x & (pieces.get(oppCol + "Bishops"))) != 0){
+                blocks[0] |= (bishopMoves(pieces.get(col + "Kings"), color) & bishopMoves(pieces.get(oppCol + "Bishops"), !color));
+            } else if ((x & (pieces.get(oppCol + "Queens"))) != 0){
+                if ((rookMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Queens")) != 0){
+                    blocks[0] |= (rookMoves(pieces.get(col + "Kings"), color) & rookMoves(pieces.get(oppCol + "Queens"), !color));
+                } else {
+                    blocks[0] |= (bishopMoves(pieces.get(col + "Kings"), color) & bishopMoves(pieces.get(oppCol + "Queens"), !color));
+                }
+            }
+        });
+
+        return blocks[0];
+    }
+
+    //TODO: Calculate pinned squares
     public long getPinnedSquares(boolean color){
         long pinned = 0L;
         String col = color ? "white" : "black";

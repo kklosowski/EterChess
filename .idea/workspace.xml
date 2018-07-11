@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24705422-76d3-42b0-9f4c-28857fa9ab71" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Conversions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Conversions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Conversions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Conversions.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,8 +50,8 @@
       <file leaf-file-name="BoardController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="834">
-              <caret line="168" column="91" selection-start-line="168" selection-start-column="91" selection-end-line="168" selection-end-column="91" />
+            <state relative-caret-position="851">
+              <caret line="170" column="5" lean-forward="true" selection-start-line="170" selection-start-column="5" selection-end-line="170" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,52 +71,37 @@
       <file leaf-file-name="Conversions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            <state relative-caret-position="861">
+              <caret line="94" column="25" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
               <folding>
-                <element signature="e#925#926#0" expanded="true" />
-                <element signature="e#978#979#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="board.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/views/board.fxml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
       <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="342" column="52" selection-start-line="342" selection-start-column="52" selection-end-line="342" selection-end-column="52" />
+            <state relative-caret-position="725">
+              <caret line="612" column="94" selection-start-line="612" selection-start-column="94" selection-end-line="612" selection-end-column="94" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3567#3568#0" expanded="true" />
-                <element signature="e#3596#3597#0" expanded="true" />
-                <element signature="e#4658#4659#0" expanded="true" />
-                <element signature="e#4690#4691#0" expanded="true" />
-                <element signature="e#5081#5082#0" expanded="true" />
-                <element signature="e#5136#5137#0" expanded="true" />
-                <element signature="e#4885#4886#0" expanded="true" />
-                <element signature="e#4920#4921#0" expanded="true" />
-                <element signature="method#toString#0;class#Board#0" />
-                <element signature="e#4830#5128#0" />
-                <element signature="method#toFEN#0;class#Board#0" />
-                <element signature="method#pgnMove#0;class#Board#0" />
-                <element signature="method#rookMoves#0;class#Board#0" />
-                <element signature="method#bishopMoves#0;class#Board#0" />
-                <element signature="method#pawnMoves#0;class#Board#0" />
-                <element signature="method#pawnAttacks#0;class#Board#0" />
-                <element signature="method#queenMoves#0;class#Board#0" />
-                <element signature="e#21799#21800#0" expanded="true" />
+                <element signature="e#5704#6426#0" />
+                <element signature="e#6432#7991#0" />
+                <element signature="e#7997#8039#0" />
+                <element signature="e#14626#15416#0" />
+                <element signature="e#15422#16453#0" />
+                <element signature="e#16459#17678#0" />
+                <element signature="e#17684#18372#0" />
+                <element signature="e#18378#18820#0" />
+                <element signature="e#18826#18964#0" />
+                <element signature="e#18970#20282#0" />
+                <element signature="e#20288#21125#0" />
+                <element signature="e#21131#21551#0" />
                 <element signature="e#21823#21824#0" expanded="true" />
+                <element signature="e#21847#21848#0" expanded="true" />
+                <element signature="e#22652#22900#0" />
               </folding>
             </state>
           </provider>
@@ -121,7 +110,7 @@
       <file leaf-file-name="CoreDocumentImpl.java" pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/com/sun/org/apache/xerces/internal/dom/CoreDocumentImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
+            <state relative-caret-position="2363">
               <caret line="194" column="22" selection-start-line="194" selection-start-column="22" selection-end-line="194" selection-end-column="22" />
             </state>
           </provider>
@@ -130,7 +119,7 @@
       <file leaf-file-name="Math.java" pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/java/lang/Math.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
+            <state relative-caret-position="16864">
               <caret line="1050" column="22" selection-start-line="1050" selection-start-column="22" selection-end-line="1050" selection-end-column="22" />
             </state>
           </provider>
@@ -169,15 +158,15 @@
       <find>return</find>
       <find>Fen</find>
       <find>sys</find>
-      <find>system</find>
       <find>promotion</find>
       <find>System.out.println(&quot;PROMOTION</find>
       <find>System.out.println</find>
       <find>whiteKing</find>
-      <find>return</find>
       <find>col + check</find>
       <find>checkers</find>
+      <find>true</find>
       <find>grid</find>
+      <find>system</find>
     </findStrings>
     <replaceStrings>
       <replace>piece</replace>
@@ -288,9 +277,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -394,12 +383,13 @@
       <workItem from="1528845765958" duration="6947000" />
       <workItem from="1529888361193" duration="316000" />
       <workItem from="1529888723868" duration="1350000" />
-      <workItem from="1529935596017" duration="134451000" />
+      <workItem from="1529935596017" duration="135793000" />
+      <workItem from="1531237386470" duration="6288000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156972000" />
+    <option name="totallyTimeSpent" value="164602000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -415,35 +405,35 @@
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Statistic" order="7" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39954165" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32925898" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32925898" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21466768" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3295858" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19600631" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19810826" />
+      <window_info anchor="bottom" id="Statistic" order="7" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39954165" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.3295858" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,6 +452,79 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2601">
+          <caret line="168" column="91" selection-start-line="168" selection-start-column="91" selection-end-line="168" selection-end-column="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Point.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7412">
+          <caret line="608" column="25" lean-forward="true" selection-start-line="608" selection-start-column="25" selection-end-line="608" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
+            <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/com/sun/org/apache/xerces/internal/dom/CoreDocumentImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2363">
+          <caret line="194" column="22" selection-start-line="194" selection-start-column="22" selection-end-line="194" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16864">
+          <caret line="1050" column="22" selection-start-line="1050" selection-start-column="22" selection-end-line="1050" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -485,25 +548,21 @@
           <caret line="93" column="5" lean-forward="true" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
@@ -599,25 +658,21 @@
           <caret line="72" column="45" lean-forward="true" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
@@ -671,25 +726,21 @@
           <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
@@ -743,25 +794,21 @@
           <caret line="78" column="10" lean-forward="true" selection-start-line="78" selection-start-column="10" selection-end-line="78" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
@@ -815,25 +862,21 @@
           <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
@@ -886,7 +929,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/java/lang/Math.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
+        <state relative-caret-position="16864">
           <caret line="1050" column="22" selection-start-line="1050" selection-start-column="22" selection-end-line="1050" selection-end-column="22" />
         </state>
       </provider>
@@ -900,18 +943,17 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/com/sun/org/apache/xerces/internal/dom/CoreDocumentImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
+        <state relative-caret-position="2363">
           <caret line="194" column="22" selection-start-line="194" selection-start-column="22" selection-end-line="194" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/views/board.fxml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -923,28 +965,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        <state relative-caret-position="861">
+          <caret line="94" column="25" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
           <folding>
-            <element signature="e#925#926#0" expanded="true" />
-            <element signature="e#978#979#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="168" column="91" selection-start-line="168" selection-start-column="91" selection-end-line="168" selection-end-column="91" />
+        <state relative-caret-position="851">
+          <caret line="170" column="5" lean-forward="true" selection-start-line="170" selection-start-column="5" selection-end-line="170" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -953,29 +987,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="342" column="52" selection-start-line="342" selection-start-column="52" selection-end-line="342" selection-end-column="52" />
+        <state relative-caret-position="725">
+          <caret line="612" column="94" selection-start-line="612" selection-start-column="94" selection-end-line="612" selection-end-column="94" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#4658#4659#0" expanded="true" />
-            <element signature="e#4690#4691#0" expanded="true" />
-            <element signature="e#5081#5082#0" expanded="true" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#4885#4886#0" expanded="true" />
-            <element signature="e#4920#4921#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" />
-            <element signature="e#4830#5128#0" />
-            <element signature="method#toFEN#0;class#Board#0" />
-            <element signature="method#pgnMove#0;class#Board#0" />
-            <element signature="method#rookMoves#0;class#Board#0" />
-            <element signature="method#bishopMoves#0;class#Board#0" />
-            <element signature="method#pawnMoves#0;class#Board#0" />
-            <element signature="method#pawnAttacks#0;class#Board#0" />
-            <element signature="method#queenMoves#0;class#Board#0" />
-            <element signature="e#21799#21800#0" expanded="true" />
+            <element signature="e#5704#6426#0" />
+            <element signature="e#6432#7991#0" />
+            <element signature="e#7997#8039#0" />
+            <element signature="e#14626#15416#0" />
+            <element signature="e#15422#16453#0" />
+            <element signature="e#16459#17678#0" />
+            <element signature="e#17684#18372#0" />
+            <element signature="e#18378#18820#0" />
+            <element signature="e#18826#18964#0" />
+            <element signature="e#18970#20282#0" />
+            <element signature="e#20288#21125#0" />
+            <element signature="e#21131#21551#0" />
             <element signature="e#21823#21824#0" expanded="true" />
+            <element signature="e#21847#21848#0" expanded="true" />
+            <element signature="e#22652#22900#0" />
           </folding>
         </state>
       </provider>
