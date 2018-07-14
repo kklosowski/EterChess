@@ -166,6 +166,7 @@ public class BoardController {
             kingIV.setEffect(null);
         }
 
+        board.getPinnedPieceMoveMasks(board.movingColor);
 //        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
 //        System.out.println(Conversions.longToGrid(board.checkBlockMask));
     }
