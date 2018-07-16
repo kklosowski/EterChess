@@ -77,9 +77,6 @@ public class BoardController {
         board.getPieces().forEach((key, value) -> {
 
             String piece = Conversions.longToString(value);
-            //TODO: something here
-//            Group pieceGroup = new Group();
-//            pieceGroup.setId("pieceGroup");
 
             for (int i = 0; i < piece.length(); i++) {
                 if (piece.charAt(piece.length() - 1 - i) == '1') {
@@ -162,8 +159,14 @@ public class BoardController {
 
         if (board.isInCheck(board.movingColor)) {
             kingIV.setEffect(new DropShadow(40, Color.RED));
+            if (board.allMoves(board.movingColor).size() == 0){
+                System.out.println("CHECKMATE");
+            }
         } else {
             kingIV.setEffect(null);
+            if (board.allMoves(board.movingColor).size() == 0){
+                System.out.println("STALEMATE");
+            }
         }
 
         board.getPinnedPieceMoveMasks(board.movingColor);

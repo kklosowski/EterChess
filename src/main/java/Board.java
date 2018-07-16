@@ -10,11 +10,11 @@ public class Board {
 
     final boolean BLACK = false;
     final boolean WHITE = true;
-    public boolean movingColor = true;
-    Map<String, Long> pieces = new HashMap<>();
-    Map<String, Character> pieceSymbols = new HashMap<>();
-    Map<String, Long> constants = new HashMap<>();
-    Map<Character, Boolean> castle = new HashMap<>();
+    boolean movingColor = true;
+    Map<String, Long> pieces;
+    Map<String, Character> pieceSymbols;
+    Map<String, Long> constants;
+    Map<Character, Boolean> castle;
     long enpassant = 0L;
     int halfmove = 1;
     int fullmove = 0;
@@ -22,12 +22,78 @@ public class Board {
     long whiteAttacks;
     long whiteKingDanger;
     long blackKingDanger;
-    long checkBlockMask;
-    long checkCaptureMask;
-
-    //TODO: Pinned pieces check
 
     public Board() {
+        pieces = new HashMap<>();
+        castle = new HashMap<>();
+        initConstants();
+
+        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
+        pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
+        pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
+        pieces.put("whiteRooks", 0b0000000000000000000000000000000000000000000000000000000010000001L);
+        pieces.put("whiteQueens", 0b0000000000000000000000000000000000000000000000000000000000001000L);
+        pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
+
+        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackPawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackKnights", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackBishops", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackRooks", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackQueens", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackKings", 0b0001000000000000000000000000000000000000000000000000000000000000L);
+
+        castle.put('K', true);
+        castle.put('Q', true);
+        castle.put('k', true);
+        castle.put('q', true);
+
+//        pieceSymbols.put("moves", '*');
+//        pieces.put("moves", knightMoves(pieces.get("whiteKnights") | pieces.get("blackKnights")));
+        System.out.println(toFEN());
+    }
+
+    //TODO: Make a copy constructor
+
+    public Board(Board toCopy){
+        initConstants();
+        this.pieces = new HashMap<>(toCopy.pieces);
+        this.castle = new HashMap<>(toCopy.castle);
+        this.movingColor = toCopy.movingColor;
+        this.enpassant = toCopy.enpassant;
+        this.halfmove = toCopy.halfmove;
+        this.fullmove = toCopy.fullmove;
+        this.blackAttacks = toCopy.blackAttacks;
+        this.whiteAttacks = toCopy.whiteAttacks;
+        this.blackKingDanger = toCopy.blackKingDanger;
+        this.whiteKingDanger = toCopy.whiteKingDanger;
+    }
+
+
+    public void initConstants(){
+        this.pieceSymbols = new HashMap<>();
+        this.constants = new HashMap<>();
+
+        pieceSymbols.put("whitePawns", 'P');
+        pieceSymbols.put("whiteBishops", 'B');
+        pieceSymbols.put("whiteKnights", 'N');
+        pieceSymbols.put("whiteRooks", 'R');
+        pieceSymbols.put("whiteQueens", 'Q');
+        pieceSymbols.put("whiteKings", 'K');
+
+        pieceSymbols.put("blackPawns", 'p');
+        pieceSymbols.put("blackBishops", 'b');
+        pieceSymbols.put("blackKnights", 'n');
+        pieceSymbols.put("blackRooks", 'r');
+        pieceSymbols.put("blackQueens", 'q');
+        pieceSymbols.put("blackKings", 'k');
+
+
+
         constants.put("aFile", 0x0101010101010101L);
         constants.put("bFile", 0x0202020202020202L);
         constants.put("cFile", 0x0404040404040404L);
@@ -54,45 +120,6 @@ public class Board {
         constants.put("QRookCastleMask", 0b0000000000000000000000000000000000000000000000000000000000001001L);
         constants.put("kRookCastleMask", 0b1010000000000000000000000000000000000000000000000000000000000000L);
         constants.put("qRookCastleMask", 0b0000100100000000000000000000000000000000000000000000000000000000L);
-
-        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
-        pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
-        pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
-        pieces.put("whiteRooks", 0b0000000000000000000000000000000000000000000000000000000010000000L);
-        pieces.put("whiteQueens", 0b0000000000000000000000000000000000000000000000000000000000001000L);
-        pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
-
-//        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
-        pieces.put("blackPawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackRooks", 0b0000000100000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackKings", 0b0001000000000000000000000000000000000000000000000000000000000000L);
-
-        castle.put('K', true);
-        castle.put('Q', true);
-        castle.put('k', true);
-        castle.put('q', true);
-
-        pieceSymbols.put("whitePawns", 'P');
-        pieceSymbols.put("whiteBishops", 'B');
-        pieceSymbols.put("whiteKnights", 'N');
-        pieceSymbols.put("whiteRooks", 'R');
-        pieceSymbols.put("whiteQueens", 'Q');
-        pieceSymbols.put("whiteKings", 'K');
-
-        pieceSymbols.put("blackPawns", 'p');
-        pieceSymbols.put("blackBishops", 'b');
-        pieceSymbols.put("blackKnights", 'n');
-        pieceSymbols.put("blackRooks", 'r');
-        pieceSymbols.put("blackQueens", 'q');
-        pieceSymbols.put("blackKings", 'k');
-
-
-//        pieceSymbols.put("moves", '*');
-//        pieces.put("moves", knightMoves(pieces.get("whiteKnights") | pieces.get("blackKnights")));
-        System.out.println(toFEN());
     }
 
     public Map<String, Long> getPieces() {
@@ -286,10 +313,34 @@ public class Board {
 
         if (movingColor == WHITE) {
             whiteAttacks = allAttacks(WHITE);
-            blackKingDanger = kingDangerSquares(BLACK);
+            if (isInCheck(BLACK)){
+                long[] protectedCheckers = {0L};
+                long checkersBlack = getCheckingPieces(BLACK);
+                pieces.entrySet()
+                        .stream()
+                        .filter(x -> (x.getValue() & checkersBlack) != 0)
+                        .forEach(x -> {
+                            pieces.compute(x.getKey(), (k, v) -> v ^= checkersBlack);
+                            protectedCheckers[0] |= allAttacks(WHITE) & checkersBlack;
+                            pieces.compute(x.getKey(), (k, v) -> v ^= checkersBlack);
+                        });
+                blackKingDanger = kingDangerSquares(BLACK) | protectedCheckers[0];
+            }
         } else {
             blackAttacks = allAttacks(BLACK);
-            whiteKingDanger = kingDangerSquares(WHITE);
+            if (isInCheck(WHITE)){
+                long[] protectedCheckers = {0L};
+                long checkersWhite = getCheckingPieces(WHITE);
+                pieces.entrySet()
+                        .stream()
+                        .filter(x -> (x.getValue() & checkersWhite) != 0)
+                        .forEach(x -> {
+                            pieces.compute(x.getKey(), (k, v) -> v ^= checkersWhite);
+                            protectedCheckers[0] |= allAttacks(BLACK) & checkersWhite;
+                            pieces.compute(x.getKey(), (k, v) -> v ^= checkersWhite);
+                        });
+                whiteKingDanger = kingDangerSquares(WHITE) | protectedCheckers[0];
+            }
         }
 
 
@@ -298,7 +349,7 @@ public class Board {
         movingColor = !movingColor;
 
 //        System.out.println(toString());
-        System.out.println(toFEN());
+//        System.out.println(toFEN());
     }
 
     public long getMoves(long square) {
@@ -310,9 +361,10 @@ public class Board {
                 .orElse("empty")
                 .toLowerCase();
 
+        boolean color = pieceType.contains("white");
         long moves;
 
-        if (this.movingColor != pieceType.contains("white") | pieceType.equals("empty")) {
+        if (this.movingColor != color | pieceType.equals("empty")) {
             moves = 0L;
         }  else if (pieceType.contains("knight")) {
             moves = knightMoves(square, this.movingColor);
@@ -553,8 +605,6 @@ public class Board {
         long moves = 0L;
         long kingDanger = color ? whiteKingDanger : blackKingDanger;
 
-
-        //TODO: Check for checks
         moves |= ((positions << 9) | (positions >> 7) | (positions << 1)) & ~constants.get("aFile");
         moves |= ((positions << 7) | (positions >> 9) | (positions >> 1)) & ~constants.get("hFile");
         moves |= (positions << 8) | (positions >> 8);
@@ -578,8 +628,6 @@ public class Board {
             }
         }
 
-
-
         return moves & ~colorPieces(color) & ~kingDanger ;
     }
 
@@ -598,7 +646,6 @@ public class Board {
                             } else {
                                 attacks[0] |= getMoves(1L << i);
                             }
-//                            System.out.println(Conversions.longToString(attacks[0]));
                         }
                     }
                 });
@@ -733,5 +780,44 @@ public class Board {
         return pinnedPieceMoves;
     }
 
+    public List<Long> allMoves(boolean color){
+        List<Long> allMoves = new ArrayList<>();
+
+        String col = color ? "white" : "black";
+
+        pieces.entrySet()
+                .stream()
+                .filter(x -> x.getKey().contains(col))
+                .forEach(x -> {
+                    Conversions.separateBits(x.getValue())
+                            .forEach(y -> {
+                                if (getMoves(y) != 0L){
+                                    allMoves.add(getMoves(y));
+                                }
+                            });
+                });
+
+        return allMoves;
+    }
+
+    public Map<Long, Long> movesByPiece(boolean color){
+        Map<Long, Long> movesByPiece = new HashMap<>();
+
+        String col = color ? "white" : "black";
+
+        pieces.entrySet()
+                .stream()
+                .filter(x -> x.getKey().contains(col))
+                .forEach(x -> {
+                    Conversions.separateBits(x.getValue())
+                            .forEach(y -> {
+                                if (getMoves(y) != 0L){
+                                    movesByPiece.put(y, getMoves(y));
+                                }
+                            });
+                });
+
+        return movesByPiece;
+    }
 
 }
