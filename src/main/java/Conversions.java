@@ -19,7 +19,7 @@ public class Conversions {
     }
 
     public static long longToBitIndex(long pos){
-        for (int i = 0; i < 63; i++) {
+        for (int i = 0; i < 64; i++) {
             if ((pos & (1L << i)) != 0){
                 return i;
             }
@@ -53,9 +53,7 @@ public class Conversions {
     }
 
     public static String longToSquare(long position) {
-        //TODO: implement longToSquare
-//        System.out.println(longToGrid(position));
-        return "xx";
+        return posToSquare(longToBitIndex(position));
     }
 
     public static String longToGrid(long positions){

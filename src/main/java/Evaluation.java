@@ -1,10 +1,12 @@
-import java.util.Map;
-
 public class Evaluation {
     public static void main(String[] args) {
         long nodes = 0L;
         Board board = new Board();
-        System.out.println(evaluate(board, 1, 5));
+        long startTime = System.currentTimeMillis();
+
+        System.out.println(evaluate(board, 1, 3));
+
+        System.out.println(System.currentTimeMillis() - startTime + " ms");
     }
 
     public static long evaluate(Board board, int depth, int maxDepth) {
@@ -20,10 +22,16 @@ public class Evaluation {
                             .forEach(y -> {
                                         Board next = new Board(board);
                                         next.move(x.getKey(), y);
-                                        currentDepthCount[0] += evaluate(next, depth +1, maxDepth);
+                                        currentDepthCount[0] += evaluate(next, depth + 1, maxDepth);
                                     }
                             );
                 });
+
+//        if (depth < 4){
+//            System.out.println(depth);
+//
+//        }
+
         return currentDepthCount[0];
     }
 }

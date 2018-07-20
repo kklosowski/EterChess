@@ -3,6 +3,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO: FIX: checkmate can be blocked by a piece? 2 queen open field checkmate
+//TODO: FIX: pawn can move when its pinned
+//TODO: FIX: king can move into a pawn attacked square
+//TODO: FIX: black king can't move to certain squares unless he is checked?!
+//TODO: FIX: black king can escape check by capturing a protected (not necessarily a checker) piece
+//TODO: FIX: kings can check each other and capture each other...
+//TODO: FIX: white bishop 3rd move check cant be blocked by some black pieces
+
 public class Board {
 
     final double SQUARE_WIDTH = 100d;
@@ -16,8 +24,8 @@ public class Board {
     Map<String, Long> constants;
     Map<Character, Boolean> castle;
     long enpassant = 0L;
-    int halfmove = 1;
-    int fullmove = 0;
+    int halfmove = 0;
+    int fullmove = 1;
     long blackAttacks;
     long whiteAttacks;
     long whiteKingDanger;
@@ -36,7 +44,7 @@ public class Board {
         pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
 
         pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackPawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackPawns", 0b0000000000011111000000000000000000000000000000000000000000000000L);
         pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
 //        pieces.put("blackKnights", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
@@ -57,8 +65,6 @@ public class Board {
         System.out.println(toFEN());
     }
 
-    //TODO: Make a copy constructor
-
     public Board(Board toCopy){
         initConstants();
         this.pieces = new HashMap<>(toCopy.pieces);
@@ -71,6 +77,11 @@ public class Board {
         this.whiteAttacks = toCopy.whiteAttacks;
         this.blackKingDanger = toCopy.blackKingDanger;
         this.whiteKingDanger = toCopy.whiteKingDanger;
+    }
+
+    //TODO: Implement FEN constructor
+    public Board(String FEN){
+
     }
 
 
@@ -134,11 +145,7 @@ public class Board {
         return colorPieces(true) | colorPieces(false);
     }
 
-    private long colorPieces(boolean color){
-        return colorPieces(color, true);
-    }
-
-    private long colorPieces(boolean color, boolean king) {
+    private long colorPieces(boolean color) {
         String col;
         if (color) {
             col = "white";
@@ -149,7 +156,6 @@ public class Board {
         pieces.entrySet()
                 .stream()
                 .filter(x -> x.getKey().contains(col))
-                .filter(x -> king || !x.getKey().contains("King"))
                 .forEach(x -> all[0] |= x.getValue());
         return all[0];
     }
@@ -242,12 +248,12 @@ public class Board {
                         if (start > enpassant) {
                             pieces.compute(x.getKey(), (k, v) -> v ^ (target << 8));
                         } else {
-                            pieces.compute(x.getKey(), (k, v) -> v ^ (target >> 8));
+                            pieces.compute(x.getKey(), (k, v) -> v ^ (target >>> 8));
                         }
                     } else {
                         pieces.compute(x.getKey(), (k, v) -> v ^ target);
                     }
-                    halfmove = 0;
+                    halfmove = -1;
                 });
 
         //Move the piece
@@ -260,11 +266,13 @@ public class Board {
                         halfmove = 0;
                         if ((start << 16) == target) {
                             enpassant = (start << 8);
-                        } else if (start >> 16 == target) {
-                            enpassant = (start >> 8);
+                        } else if (start >>> 16 == target) {
+                            enpassant = (start >>> 8);
                         } else {
                             enpassant = 0L;
                         }
+                    } else {
+                        halfmove++;
                     }
                     //Move rook while castling
                     if (x.getKey().contains("King")) {
@@ -272,7 +280,7 @@ public class Board {
                             if ((start << 2) == target) {
                                 pieces.compute("whiteRooks", (k, v) -> v ^ constants.get("KRookCastleMask"));
                             }
-                            if ((start >> 2) == target) {
+                            if ((start >>> 2) == target) {
                                 pieces.compute("whiteRooks", (k, v) -> v ^ constants.get("QRookCastleMask"));
                             }
                             castle.replace('K', false);
@@ -281,7 +289,7 @@ public class Board {
                             if ((start << 2) == target) {
                                 pieces.compute("blackRooks", (k, v) -> v ^ constants.get("kRookCastleMask"));
                             }
-                            if ((start >> 2) == target) {
+                            if ((start >>> 2) == target) {
                                 pieces.compute("blackRooks", (k, v) -> v ^ constants.get("qRookCastleMask"));
                             }
                             castle.replace('k', false);
@@ -344,7 +352,6 @@ public class Board {
         }
 
 
-        halfmove++;
         if (!movingColor) fullmove++;
         movingColor = !movingColor;
 
@@ -405,16 +412,16 @@ public class Board {
         long moves = 0L;
 
         //Moves to the right
-        moves |= (positions & ~constants.get("aFile")) >> 17;
+        moves |= (positions & ~constants.get("aFile")) >>> 17;
         moves |= (positions & ~constants.get("aFile")) << 15;
-        moves |= (positions & ~constants.get("aFile") & ~constants.get("bFile")) >> 10;
+        moves |= (positions & ~constants.get("aFile") & ~constants.get("bFile")) >>> 10;
         moves |= (positions & ~constants.get("aFile") & ~constants.get("bFile")) << 6;
 
         //Moves to the left
         moves |= (positions & ~constants.get("hFile") & ~constants.get("gFile")) << 10;
-        moves |= (positions & ~constants.get("hFile") & ~constants.get("gFile")) >> 6;
+        moves |= (positions & ~constants.get("hFile") & ~constants.get("gFile")) >>> 6;
         moves |= (positions & ~constants.get("hFile")) << 17;
-        moves |= (positions & ~constants.get("hFile")) >> 15;
+        moves |= (positions & ~constants.get("hFile")) >>> 15;
 
         return moves & ~colorPieces(color);
     }
@@ -441,14 +448,14 @@ public class Board {
         //Moves to left
         temp = positions;
         while ((temp & (constants.get("aFile") | (current ^ positions) | opponent)) == 0) {
-            temp >>= 1;
+            temp >>>= 1;
             moves |= temp;
         }
 
         //Moves to bottom
         temp = positions;
         while ((temp & (constants.get("1Rank") | (current ^ positions) | opponent)) == 0) {
-            temp >>= 8;
+            temp >>>= 8;
             moves |= temp;
         }
 
@@ -475,14 +482,14 @@ public class Board {
         //Moves to left
         temp = positions;
         while ((temp & constants.get("aFile")) == 0) {
-            temp >>= 1;
+            temp >>>= 1;
             moves |= temp;
         }
 
         //Moves to bottom
         temp = positions;
         while ((temp & constants.get("1Rank")) == 0) {
-            temp >>= 8;
+            temp >>>= 8;
             moves |= temp;
         }
 
@@ -514,7 +521,7 @@ public class Board {
         temp = positions;
         while ((temp & (constants.get("aFile") | constants.get("1Rank")
                 | (current ^ positions) | opponent)) == 0) {
-            temp >>= 9;
+            temp >>>= 9;
             moves |= temp;
         }
 
@@ -522,7 +529,7 @@ public class Board {
         temp = positions;
         while ((temp & (constants.get("hFile") | constants.get("1Rank")
                 | (current ^ positions) | opponent)) == 0) {
-            temp >>= 7;
+            temp >>>= 7;
             moves |= temp;
         }
 
@@ -549,14 +556,14 @@ public class Board {
         //Moves to bottom-left
         temp = positions;
         while ((temp & (constants.get("aFile") | constants.get("1Rank"))) == 0) {
-            temp >>= 9;
+            temp >>>= 9;
             moves |= temp;
         }
 
         //Moves to bottom-right
         temp = positions;
         while ((temp & (constants.get("hFile") | constants.get("1Rank"))) == 0) {
-            temp >>= 7;
+            temp >>>= 7;
             moves |= temp;
         }
 
@@ -573,10 +580,10 @@ public class Board {
                 moves |= (positions << 16);
             }
         } else {
-            moves |= (positions >> 8);
+            moves |= (positions >>> 8);
             if ((positions & constants.get("7Rank")) != 0 &&
-                    (allPieces() & (positions >> 8)) == 0) {
-                moves |= (positions >> 16);
+                    (allPieces() & (positions >>> 8)) == 0) {
+                moves |= (positions >>> 16);
             }
         }
 
@@ -590,8 +597,8 @@ public class Board {
             moves |= (positions << 9) & ~constants.get("aFile");
             moves |= (positions << 7) & ~constants.get("hFile");
         } else {
-            moves |= (positions >> 9) & ~constants.get("hFile");
-            moves |= (positions >> 7) & ~constants.get("aFile");
+            moves |= (positions >>> 9) & ~constants.get("hFile");
+            moves |= (positions >>> 7) & ~constants.get("aFile");
         }
 
         return moves & ~colorPieces(color);
@@ -605,9 +612,9 @@ public class Board {
         long moves = 0L;
         long kingDanger = color ? whiteKingDanger : blackKingDanger;
 
-        moves |= ((positions << 9) | (positions >> 7) | (positions << 1)) & ~constants.get("aFile");
-        moves |= ((positions << 7) | (positions >> 9) | (positions >> 1)) & ~constants.get("hFile");
-        moves |= (positions << 8) | (positions >> 8);
+        moves |= ((positions << 9) | (positions >>> 7) | (positions << 1)) & ~constants.get("aFile");
+        moves |= ((positions << 7) | (positions >>> 9) | (positions >>> 1)) & ~constants.get("hFile");
+        moves |= (positions << 8) | (positions >>> 8);
 
 
         if ((kingDanger & positions) == 0){
@@ -616,14 +623,14 @@ public class Board {
                     moves |= positions << 2;
                 }
                 if (castle.get('Q') && (constants.get("QCastleMask") & (blackAttacks | colorPieces(WHITE))) == 0) {
-                    moves |= positions >> 2;
+                    moves |= positions >>> 2;
                 }
             } else {
                 if (castle.get('k') && (constants.get("kCastleMask") & (whiteAttacks | colorPieces(BLACK))) == 0) {
                     moves |= positions << 2;
                 }
                 if (castle.get('q') && (constants.get("qCastleMask") & (whiteAttacks | colorPieces(BLACK))) == 0) {
-                    moves |= positions >> 2;
+                    moves |= positions >>> 2;
                 }
             }
         }
@@ -659,7 +666,6 @@ public class Board {
         //Temporarily remove the king to calculate danger squares
         long kingTemp = pieces.get(kingKey);
         pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
-
         long dangerSquares = allAttacks(!color);
         pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
 
@@ -678,26 +684,26 @@ public class Board {
         return 0;
     }
 
-    //TODO: Check
-    private List<Long> possibleMovesToPosition(long position, boolean color) {
-        String col = color ? "white" : "black";
-        List<Long> possibleMoves = new ArrayList<>();
-        pieces.entrySet()
-                .stream()
-                .filter(x -> x.getKey().contains(col))
-                .forEach(x -> {
-                    long startPos;
-                    for (int i = 0; i < 64; i++) {
-                        startPos = 1L << i;
-                        if ((startPos & x.getValue()) != 0) {
-                            if ((getMoves(startPos) & position) != 0) {
-                                possibleMoves.add(startPos);
-                            }
-                        }
-                    }
-                });
-        return possibleMoves;
-    }
+//    //TODO: Check
+//    private List<Long> possibleMovesToPosition(long position, boolean color) {
+//        String col = color ? "white" : "black";
+//        List<Long> possibleMoves = new ArrayList<>();
+//        pieces.entrySet()
+//                .stream()
+//                .filter(x -> x.getKey().contains(col))
+//                .forEach(x -> {
+//                    long startPos;
+//                    for (int i = 0; i < 64; i++) {
+//                        startPos = 1L << i;
+//                        if ((startPos & x.getValue()) != 0) {
+//                            if ((getMoves(startPos) & position) != 0) {
+//                                possibleMoves.add(startPos);
+//                            }
+//                        }
+//                    }
+//                });
+//        return possibleMoves;
+//    }
 
     public void promotion(String promotionType, long square, boolean color){
         String col = color ? "white" : "black";
@@ -791,8 +797,9 @@ public class Board {
                 .forEach(x -> {
                     Conversions.separateBits(x.getValue())
                             .forEach(y -> {
-                                if (getMoves(y) != 0L){
-                                    allMoves.add(getMoves(y));
+                                long mov = getMoves(y);
+                                if (mov != 0L){
+                                    allMoves.add(mov);
                                 }
                             });
                 });
@@ -811,11 +818,19 @@ public class Board {
                 .forEach(x -> {
                     Conversions.separateBits(x.getValue())
                             .forEach(y -> {
-                                if (getMoves(y) != 0L){
-                                    movesByPiece.put(y, getMoves(y));
+                                long mov = getMoves(y);
+                                if (mov != 0L){
+                                    movesByPiece.put(y, mov);
                                 }
                             });
                 });
+
+//        if (movesByPiece.size() == 0){
+//            System.out.println("Checkmate");
+//        }
+//        if (isInCheck(movingColor)){
+//            System.out.println("Check");
+//        }
 
         return movesByPiece;
     }

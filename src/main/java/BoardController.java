@@ -119,7 +119,7 @@ public class BoardController {
                         long selectedPosition = 1L << Conversions.coordToPosition(startCoord.x + 1, startCoord.y + 1);
                         long targetPosition = 1L << Conversions.coordToPosition(mouseEvent.getSceneX(), mouseEvent.getSceneY());
 
-                        if ((board.getMoves(selectedPosition) & (targetPosition)) > 0
+                        if ((board.getMoves(selectedPosition) & (targetPosition)) != 0
                                 && selectedPosition != targetPosition) {
                             p.setLayoutX(Math.floorDiv((long) mouseEvent.getSceneX(), (long) SQUARE_WIDTH) * SQUARE_WIDTH);
                             p.setLayoutY(Math.floorDiv((long) mouseEvent.getSceneY(), (long) SQUARE_HEIGHT) * SQUARE_HEIGHT);
