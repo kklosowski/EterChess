@@ -29,7 +29,8 @@ public class BoardController {
     @FXML
     private Group pieceGroup;
 
-    private Board board = new Board();
+    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
+//    private Board board = new Board();
 
     @FXML
     public void initialize() {

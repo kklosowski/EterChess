@@ -1,20 +1,11 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-//TODO: FIX: checkmate can be blocked by a piece? 2 queen open field checkmate
-//TODO: FIX: pawn can move when its pinned
-//TODO: FIX: king can move into a pawn attacked square
-//TODO: FIX: black king can't move to certain squares unless he is checked?!
+//TODO: FIX: FEN constructor doesn't properly update checks and danger square FEN: "3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11"
+//TODO: FIX: knight can move out of the pin
 //TODO: FIX: black king can escape check by capturing a protected (not necessarily a checker) piece
 //TODO: FIX: kings can check each other and capture each other...
-//TODO: FIX: white bishop 3rd move check cant be blocked by some black pieces
 
 public class Board {
-
-    final double SQUARE_WIDTH = 100d;
-    final double SQUARE_HEIGHT = 100d;
 
     final boolean BLACK = false;
     final boolean WHITE = true;
@@ -65,7 +56,7 @@ public class Board {
         System.out.println(toFEN());
     }
 
-    public Board(Board toCopy){
+    public Board(Board toCopy) {
         initConstants();
         this.pieces = new HashMap<>(toCopy.pieces);
         this.castle = new HashMap<>(toCopy.castle);
@@ -79,13 +70,69 @@ public class Board {
         this.whiteKingDanger = toCopy.whiteKingDanger;
     }
 
-    //TODO: Implement FEN constructor
-    public Board(String FEN){
+    public Board(String FEN) {
+        pieces = new HashMap<>();
+        castle = new HashMap<>();
+        initConstants();
 
+        pieces.put("whitePawns", 0L);
+        pieces.put("whiteKnights", 0L);
+        pieces.put("whiteBishops", 0L);
+        pieces.put("whiteRooks", 0L);
+        pieces.put("whiteQueens", 0L);
+        pieces.put("whiteKings", 0L);
+        pieces.put("blackPawns", 0L);
+        pieces.put("blackKnights", 0L);
+        pieces.put("blackBishops", 0L);
+        pieces.put("blackRooks", 0L);
+        pieces.put("blackQueens", 0L);
+        pieces.put("blackKings", 0L);
+
+        String[] fenSplit = FEN.split(" ");
+
+        movingColor = fenSplit[1].equals("w");
+        castle.put('K', fenSplit[2].contains("K"));
+        castle.put('Q', fenSplit[2].contains("Q"));
+        castle.put('k', fenSplit[2].contains("k"));
+        castle.put('q', fenSplit[2].contains("q"));
+        enpassant = fenSplit[3].equals("-") ? 0L : Conversions.squareToLong(fenSplit[3]);
+        halfmove = Integer.valueOf(fenSplit[4]);
+        fullmove = Integer.valueOf(fenSplit[5]);
+        blackAttacks = allAttacks(BLACK);
+        whiteAttacks = allAttacks(WHITE);
+        blackKingDanger = kingDangerSquares(BLACK);
+        whiteKingDanger = kingDangerSquares(WHITE);
+
+        String positions = new StringBuilder(fenSplit[0]).reverse().toString();
+
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(positions.split("/")).forEach(x -> {
+                    sb.append(new StringBuilder(x).reverse().toString());
+                }
+        );
+
+        positions = sb.toString();
+
+        for (int i = 1; i <= 8; i++) {
+            positions = positions.replace(String.valueOf(i), new String(new char[i]).replace("\0", "*"));
+        }
+        String finalPositions = positions;
+        for (int i = 0; i < 64; i++) {
+            if (positions.charAt(i) != '*'){
+                int finalI = i;
+                String type = pieceSymbols
+                        .entrySet()
+                        .stream()
+                        .filter(x -> x.getValue() == finalPositions.charAt(finalI))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Illegal piece symbol in FEN string"))
+                        .getKey();
+                pieces.compute(type, (k, v) -> v |= 1L << finalI);
+            }
+        }
     }
 
-
-    public void initConstants(){
+    public void initConstants() {
         this.pieceSymbols = new HashMap<>();
         this.constants = new HashMap<>();
 
@@ -102,7 +149,6 @@ public class Board {
         pieceSymbols.put("blackRooks", 'r');
         pieceSymbols.put("blackQueens", 'q');
         pieceSymbols.put("blackKings", 'k');
-
 
 
         constants.put("aFile", 0x0101010101010101L);
@@ -236,7 +282,7 @@ public class Board {
                 .filter(x -> {
                     if (x.getKey().contains("whitePawns")) {
                         return ((x.getValue() | (enpassant & constants.get("3Rank"))) & target) != 0;
-                    } else if (x.getKey().contains("blackPawns")){
+                    } else if (x.getKey().contains("blackPawns")) {
                         return ((x.getValue() | (enpassant & constants.get("6Rank"))) & target) != 0;
                     } else {
                         return (x.getValue() & target) != 0;
@@ -253,6 +299,15 @@ public class Board {
                     } else {
                         pieces.compute(x.getKey(), (k, v) -> v ^ target);
                     }
+
+                    //Updating castle rights on rook takedown
+                    if ((target & 0x8100000000000081L) != 0){
+                        if (target == (1L << 63)) castle.replace('k', false);
+                        else if (target == 1L << 56) castle.replace('q', false);
+                        else if (target == 1L << 7) castle.replace('K', false);
+                        else if (target == 0L) castle.replace('Q', false);
+                    }
+
                     halfmove = -1;
                 });
 
@@ -298,16 +353,16 @@ public class Board {
                     }
                     //Disable castling if rook moves
                     if (x.getKey().contains("Rook")) {
-                            if ((start & Conversions.squareToLong("A1")) != 0){
-                                castle.replace('Q', false);
-                            } else if ((start & Conversions.squareToLong("H1")) != 0){
-                                castle.replace('K', false);
-                            } else if ((start & Conversions.squareToLong("A8")) != 0){
-                                castle.replace('q', false);
-                            } else if ((start & Conversions.squareToLong("H8")) != 0){
-                                castle.replace('k', false);
-                            }
+                        if ((start & Conversions.squareToLong("A1")) != 0) {
+                            castle.replace('Q', false);
+                        } else if ((start & Conversions.squareToLong("H1")) != 0) {
+                            castle.replace('K', false);
+                        } else if ((start & Conversions.squareToLong("A8")) != 0) {
+                            castle.replace('q', false);
+                        } else if ((start & Conversions.squareToLong("H8")) != 0) {
+                            castle.replace('k', false);
                         }
+                    }
 
                 })
                 .findFirst()
@@ -321,7 +376,7 @@ public class Board {
 
         if (movingColor == WHITE) {
             whiteAttacks = allAttacks(WHITE);
-            if (isInCheck(BLACK)){
+            if (isInCheck(BLACK)) {
                 long[] protectedCheckers = {0L};
                 long checkersBlack = getCheckingPieces(BLACK);
                 pieces.entrySet()
@@ -333,10 +388,13 @@ public class Board {
                             pieces.compute(x.getKey(), (k, v) -> v ^= checkersBlack);
                         });
                 blackKingDanger = kingDangerSquares(BLACK) | protectedCheckers[0];
+            } else {
+                //Filter for protected piece danger
+                blackKingDanger = whiteAttacks;
             }
         } else {
             blackAttacks = allAttacks(BLACK);
-            if (isInCheck(WHITE)){
+            if (isInCheck(WHITE)) {
                 long[] protectedCheckers = {0L};
                 long checkersWhite = getCheckingPieces(WHITE);
                 pieces.entrySet()
@@ -348,15 +406,17 @@ public class Board {
                             pieces.compute(x.getKey(), (k, v) -> v ^= checkersWhite);
                         });
                 whiteKingDanger = kingDangerSquares(WHITE) | protectedCheckers[0];
+            } else {
+                //Filter for protected piece danger
+                whiteKingDanger = blackAttacks;
             }
         }
-
 
         if (!movingColor) fullmove++;
         movingColor = !movingColor;
 
 //        System.out.println(toString());
-//        System.out.println(toFEN());
+        System.out.println(toFEN());
     }
 
     public long getMoves(long square) {
@@ -373,7 +433,7 @@ public class Board {
 
         if (this.movingColor != color | pieceType.equals("empty")) {
             moves = 0L;
-        }  else if (pieceType.contains("knight")) {
+        } else if (pieceType.contains("knight")) {
             moves = knightMoves(square, this.movingColor);
         } else if (pieceType.contains("rook")) {
             moves = rookMoves(square, this.movingColor);
@@ -388,8 +448,8 @@ public class Board {
         } else moves = 0L;
 
 
-        if (isInCheck(movingColor)){
-            if (Conversions.bitCount(getCheckingPieces(movingColor)) > 1){
+        if (isInCheck(movingColor)) {
+            if (Conversions.bitCount(getCheckingPieces(movingColor)) > 1) {
                 return 0L;
 //                if (square == pieces.get("whiteKings") | square == pieces.get("whiteKings")){
 //                    moves |= kingMoves(square, movingColor);
@@ -401,7 +461,7 @@ public class Board {
             }
         }
 
-        if (getPinnedPieceMoveMasks(movingColor).containsKey(square)){
+        if (getPinnedPieceMoveMasks(movingColor).containsKey(square)) {
             moves &= getPinnedPieceMoveMasks(movingColor).get(square);
         }
 
@@ -462,7 +522,7 @@ public class Board {
         return moves & ~current;
     }
 
-    private long xRayRookMoves(long positions){
+    private long xRayRookMoves(long positions) {
         long moves = 0L;
 
         //Moves to top
@@ -536,7 +596,7 @@ public class Board {
         return moves & ~current;
     }
 
-    private long xRayBishopMoves(long positions){
+    private long xRayBishopMoves(long positions) {
         long moves = 0L;
 
         //Moves to top-left
@@ -617,7 +677,7 @@ public class Board {
         moves |= (positions << 8) | (positions >>> 8);
 
 
-        if ((kingDanger & positions) == 0){
+        if ((kingDanger & positions) == 0) {
             if (color == WHITE) {
                 if (castle.get('K') && (constants.get("KCastleMask") & (blackAttacks | colorPieces(WHITE))) == 0) {
                     moves |= positions << 2;
@@ -635,7 +695,7 @@ public class Board {
             }
         }
 
-        return moves & ~colorPieces(color) & ~kingDanger ;
+        return moves & ~colorPieces(color) & ~kingDanger;
     }
 
     public long allAttacks(boolean color) {
@@ -660,7 +720,7 @@ public class Board {
         return attacks[0];
     }
 
-    public long kingDangerSquares(boolean color){
+    public long kingDangerSquares(boolean color) {
         String kingKey = color ? "whiteKings" : "blackKings";
 
         //Temporarily remove the king to calculate danger squares
@@ -672,15 +732,15 @@ public class Board {
         return dangerSquares;
     }
 
-    public boolean isInCheck(boolean color){
-        if (color){
+    public boolean isInCheck(boolean color) {
+        if (color) {
             return (blackAttacks & pieces.get("whiteKings")) != 0;
-        }else {
+        } else {
             return (whiteAttacks & pieces.get("blackKings")) != 0;
         }
     }
 
-    private int squareAttackersCount(){
+    private int squareAttackersCount() {
         return 0;
     }
 
@@ -705,13 +765,13 @@ public class Board {
 //        return possibleMoves;
 //    }
 
-    public void promotion(String promotionType, long square, boolean color){
+    public void promotion(String promotionType, long square, boolean color) {
         String col = color ? "white" : "black";
         pieces.compute(col + "Pawns", (k, v) -> v ^ square);
         pieces.compute(promotionType, (k, v) -> v | square);
     }
 
-    public long getCheckingPieces(boolean color){
+    public long getCheckingPieces(boolean color) {
         String col = color ? "white" : "black";
         String oppCol = color ? "black" : "white";
 
@@ -726,22 +786,26 @@ public class Board {
         return checkers;
     }
 
-    public long getCheckBlockSquares(boolean color){
+    public long getCheckBlockSquares(boolean color) {
         String col = color ? "white" : "black";
         String oppCol = color ? "black" : "white";
 
         final long[] blocks = {0L};
 
         Conversions.separateBits(getCheckingPieces(color)).forEach(x -> {
-            if ((x & (pieces.get(oppCol + "Rooks"))) != 0){
-                blocks[0] |= (rookMoves(pieces.get(col + "Kings"), color) & rookMoves(pieces.get(oppCol + "Rooks"), !color));
-            } else if ((x & (pieces.get(oppCol + "Bishops"))) != 0){
-                blocks[0] |= (bishopMoves(pieces.get(col + "Kings"), color) & bishopMoves(pieces.get(oppCol + "Bishops"), !color));
-            } else if ((x & (pieces.get(oppCol + "Queens"))) != 0){
-                if ((rookMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Queens")) != 0){
-                    blocks[0] |= (rookMoves(pieces.get(col + "Kings"), color) & rookMoves(pieces.get(oppCol + "Queens"), !color));
+            if ((x & (pieces.get(oppCol + "Rooks"))) != 0) {
+                long rookAttackMask = rookMoves(pieces.get(col + "Kings"), color);
+                blocks[0] |= (rookAttackMask & rookMoves(pieces.get(oppCol + "Rooks") & rookAttackMask, !color));
+            } else if ((x & (pieces.get(oppCol + "Bishops"))) != 0) {
+                long bishopAttackMask = bishopMoves(pieces.get(col + "Kings"), color);
+                blocks[0] |= (bishopAttackMask & bishopMoves(pieces.get(oppCol + "Bishops") & bishopAttackMask, !color));
+            } else if ((x & (pieces.get(oppCol + "Queens"))) != 0) {
+                if ((rookMoves(pieces.get(col + "Kings"), color) & pieces.get(oppCol + "Queens")) != 0) {
+                    long rookAttackMask = rookMoves(pieces.get(col + "Kings"), color);
+                    blocks[0] |= (rookAttackMask & rookMoves(pieces.get(oppCol + "Queens") & rookAttackMask, !color));
                 } else {
-                    blocks[0] |= (bishopMoves(pieces.get(col + "Kings"), color) & bishopMoves(pieces.get(oppCol + "Queens"), !color));
+                    long bishopAttackMask = bishopMoves(pieces.get(col + "Kings"), color);
+                    blocks[0] |= (bishopAttackMask & bishopMoves(pieces.get(oppCol + "Queens") & bishopAttackMask, !color));
                 }
             }
         });
@@ -749,7 +813,7 @@ public class Board {
         return blocks[0];
     }
 
-    public Map<Long, Long> getPinnedPieceMoveMasks(boolean color){
+    public Map<Long, Long> getPinnedPieceMoveMasks(boolean color) {
         String col = color ? "white" : "black";
         String oppCol = color ? "black" : "white";
 
@@ -764,9 +828,9 @@ public class Board {
 
 
         Conversions.separateBits(pieces.get(oppCol + "Rooks") | pieces.get(oppCol + "Queens")).forEach(r -> {
-            if(Conversions.bitCount(((xRayRookMoves(r) & xRayRookMoves(movingKingPos)) & allMoving)) == 1
+            if (Conversions.bitCount(((xRayRookMoves(r) & xRayRookMoves(movingKingPos)) & allMoving)) == 1
                     && Conversions.bitCount(((rookMoves(r, !color) & xRayRookMoves(movingKingPos)) & allBoth)) < 2
-                    && (xRayRookMoves(r) & movingKingPos) != 0){
+                    && (xRayRookMoves(r) & movingKingPos) != 0) {
 
                 pinnedPieceMoves.put(allMoving & (rookMoves(r, !color)), (xRayRookMoves(r) & xRayRookMoves(movingKingPos)) | r);
             }
@@ -774,9 +838,9 @@ public class Board {
 
 
         Conversions.separateBits(pieces.get(oppCol + "Bishops") | pieces.get(oppCol + "Queens")).forEach(b -> {
-            if(Conversions.bitCount(((xRayBishopMoves(b) & xRayBishopMoves(movingKingPos)) & allMoving)) == 1
+            if (Conversions.bitCount(((xRayBishopMoves(b) & xRayBishopMoves(movingKingPos)) & allMoving)) == 1
                     && Conversions.bitCount(((bishopMoves(b, !color) & xRayBishopMoves(movingKingPos)) & allBoth)) < 2
-                    && (xRayBishopMoves(b) & movingKingPos) != 0){
+                    && (xRayBishopMoves(b) & movingKingPos) != 0) {
 
                 pinnedPieceMoves.put(allMoving & (bishopMoves(b, !color)), (xRayBishopMoves(b) & xRayBishopMoves(movingKingPos)) | b);
             }
@@ -786,7 +850,7 @@ public class Board {
         return pinnedPieceMoves;
     }
 
-    public List<Long> allMoves(boolean color){
+    public List<Long> allMoves(boolean color) {
         List<Long> allMoves = new ArrayList<>();
 
         String col = color ? "white" : "black";
@@ -798,7 +862,7 @@ public class Board {
                     Conversions.separateBits(x.getValue())
                             .forEach(y -> {
                                 long mov = getMoves(y);
-                                if (mov != 0L){
+                                if (mov != 0L) {
                                     allMoves.add(mov);
                                 }
                             });
@@ -807,7 +871,7 @@ public class Board {
         return allMoves;
     }
 
-    public Map<Long, Long> movesByPiece(boolean color){
+    public Map<Long, Long> movesByPiece(boolean color) {
         Map<Long, Long> movesByPiece = new HashMap<>();
 
         String col = color ? "white" : "black";
@@ -819,7 +883,7 @@ public class Board {
                     Conversions.separateBits(x.getValue())
                             .forEach(y -> {
                                 long mov = getMoves(y);
-                                if (mov != 0L){
+                                if (mov != 0L) {
                                     movesByPiece.put(y, mov);
                                 }
                             });
