@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private final double WINDOW_WIDTH = 800;
+    private final double CONTROLS_WIDTH = 250;
     private final double WINDOW_HEIGHT = 830;
     private final boolean MAXIMISED = false;
     private final boolean FULLSCREEN = false;
@@ -14,13 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setWidth(WINDOW_WIDTH);
+        primaryStage.setWidth(WINDOW_WIDTH + CONTROLS_WIDTH);
         primaryStage.setHeight(WINDOW_HEIGHT);
         primaryStage.setMaximized(MAXIMISED);
         primaryStage.setFullScreen(FULLSCREEN);
         primaryStage.setResizable(RESIZABLE);
 
-        Pane layout = FXMLLoader.load(getClass().getResource("/views/board.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/board.fxml"));
+        Pane layout = fxmlLoader.load();
         primaryStage.setScene(new Scene(layout));
         primaryStage.show();
     }

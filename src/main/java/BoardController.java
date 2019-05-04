@@ -1,8 +1,17 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +21,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BoardController {
@@ -29,13 +43,28 @@ public class BoardController {
     @FXML
     private Group pieceGroup;
 
-    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
-//    private Board board = new Board();
+    private ObservableMap<String, Integer> timeControlls = FXCollections.emptyObservableMap();
+
+//    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
+    private Board board = new Board();
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         drawBoard(boardCanvas.getGraphicsContext2D());
         drawPieces(root);
+        showNewGameDialog();
+    }
+
+    public void showNewGameDialog() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/new_game_dialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        NewGameDialogController dialogController = fxmlLoader.getController();
+        dialogController.setTimeControllsMap(this.timeControlls);
+        Scene scene = new Scene(parent, 600, 400);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     public void drawBoard(GraphicsContext gc) {
