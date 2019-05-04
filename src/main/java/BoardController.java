@@ -1,17 +1,16 @@
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,8 +24,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BoardController {
@@ -42,29 +42,39 @@ public class BoardController {
     private AnchorPane root;
     @FXML
     private Group pieceGroup;
+    @FXML
+    private Label playerTime;
+    @FXML
+    private Label computerTime;
+    @FXML
+    private ProgressBar playerTimeProgress;
+    @FXML
+    private ProgressBar computerTimeProgress;
 
-    private ObservableMap<String, Integer> timeControlls = FXCollections.emptyObservableMap();
+    private HashMap<String, Long> boardControls = new HashMap<>();
+
+    private Timer[] timers;
 
 //    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
-    private Board board = new Board();
+    private Board board;
+
+    private AiPlayer aiPlayer;
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() {
+         board = new Board();
+        showNewGameDialog();
+        initPlayer();
+        initTimers();
+//        startTimer();
         drawBoard(boardCanvas.getGraphicsContext2D());
         drawPieces(root);
-        showNewGameDialog();
     }
 
-    public void showNewGameDialog() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/new_game_dialog.fxml"));
-        Parent parent = fxmlLoader.load();
-        NewGameDialogController dialogController = fxmlLoader.getController();
-        dialogController.setTimeControllsMap(this.timeControlls);
-        Scene scene = new Scene(parent, 600, 400);
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.showAndWait();
+    private void initPlayer() {
+        if (boardControls.getOrDefault("mode", -1L) == 0L){
+            this.aiPlayer = new AiPlayer();
+        }
     }
 
     public void drawBoard(GraphicsContext gc) {
@@ -105,7 +115,6 @@ public class BoardController {
 
         pieceGroup.getChildren().clear();
         board.getPieces().forEach((key, value) -> {
-
             String piece = Conversions.longToString(value);
 
             for (int i = 0; i < piece.length(); i++) {
@@ -137,7 +146,6 @@ public class BoardController {
                         drawMoves(board.getMoves(Conversions.squareToLong(pieceId.split("#")[1])));
 
                         p.setCursor(Cursor.MOVE);
-
                     });
 
                     p.setOnMouseDragged(mouseEvent -> {
@@ -162,11 +170,18 @@ public class BoardController {
 
                             board.move(selectedPosition, targetPosition);
 
-
                             p.setId(p.getId().split("#")[0] + "#" + Conversions.posToSquare(targetPosition));
                             ((Group) root.getScene().lookup("#moveGroup")).getChildren().clear();
 
                             drawPieces(root);
+
+                            //MOVE OF AN AI PLAYER
+                            if (aiPlayer != null && !board.movingColor){
+                                Platform.runLater(() -> {
+                                        aiPlayer.randomMove(board);
+                                        drawPieces(root);
+                                });
+                            }
 
                         } else {
                             p.setLayoutX(startCoord.x);
@@ -175,9 +190,7 @@ public class BoardController {
                         }
                     });
 
-
                     pieceGroup.getChildren().add(p);
-
                 }
             }
         });
@@ -189,19 +202,64 @@ public class BoardController {
 
         if (board.isInCheck(board.movingColor)) {
             kingIV.setEffect(new DropShadow(40, Color.RED));
-            if (board.allMoves(board.movingColor).size() == 0){
-                System.out.println("CHECKMATE");
+            if (board.allMoves(board.movingColor).isEmpty()){
+                showWinDialog(board.movingColor);
             }
         } else {
             kingIV.setEffect(null);
-            if (board.allMoves(board.movingColor).size() == 0){
-                System.out.println("STALEMATE");
+            if (board.allMoves(board.movingColor).isEmpty()){
+                showDrawDialog();
             }
         }
-
-        board.getPinnedPieceMoveMasks(board.movingColor);
+//        board.getPinnedPieceMoveMasks(board.movingColor);
 //        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
 //        System.out.println(Conversions.longToGrid(board.checkBlockMask));
+    }
+
+    public void showNewGameDialog() {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/new_game_dialog.fxml"));
+            Parent parent = fxmlLoader.load();
+            NewGameDialogController dialogController = fxmlLoader.getController();
+            dialogController.setBoardControlsMap(this.boardControls);
+            Scene scene = new Scene(parent, 600, 400);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showDrawDialog(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game over.");
+        alert.setHeaderText("Game ended in a DRAW");
+        alert.setContentText("Do you want to play again?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            initialize();
+        } else {
+            ((Stage)boardCanvas.getScene().getWindow()).close();
+        }
+    }
+
+    public void showWinDialog(boolean color){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game over.");
+        alert.setHeaderText(color ? "White won." : "Black won.");
+        alert.setContentText("Do you want to play again?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            initialize();
+        } else {
+            ((Stage)boardCanvas.getScene().getWindow()).close();
+        }
     }
 
     public void drawPromotion(boolean color, long square) {
@@ -239,5 +297,44 @@ public class BoardController {
                     promotionPane.getChildren().add(p);
                 });
         root.getChildren().add(promotionPane);
+    }
+
+    public void initTimers(){
+        timers = new Timer[]{new Timer(), new Timer()};
+        timers[0].increment = boardControls.get("time");
+        timers[1].increment = boardControls.get("time");
+
+        timers[0].timeLeft = boardControls.get("time");
+        timers[1].timeLeft = boardControls.get("time");
+
+        playerTimeProgress.setProgress(1d);
+        computerTimeProgress.setProgress(1d);
+
+        playerTime.setText(formatTime(timers[0].timeLeft));
+        computerTime.setText(formatTime(timers[0].timeLeft));
+    }
+
+    public void startTimer(){
+        int moving = board.movingColor ? 1 : 0;
+        while(timers[moving].timeLeft > 0){
+            Platform.runLater(() -> {
+
+                    timers[moving].timeLeft -= 1000;
+                    playerTime.setText(formatTime(timers[moving].timeLeft));
+            });
+        }
+//        System.out.println("setting timer " + (color ? "white" : "black"));
+    }
+
+    private String formatTime(long millis){
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+        );
+    }
+
+    public void resign(){
+        showWinDialog(!board.movingColor);
     }
 }

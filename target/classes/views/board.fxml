@@ -27,7 +27,7 @@
                   <VBox spacing="5.0">
                      <children>
                         <Label fx:id="computerTime" prefHeight="25.0" />
-                        <ProgressBar fx:id="computerTimeProgress" prefWidth="200.0" progress="0.0" />
+                        <ProgressBar fx:id="computerTimeProgress" prefWidth="200.0" progress="1.0" />
                         <Pane prefHeight="200.0" prefWidth="200.0" />
                         <ProgressBar fx:id="playerTimeProgress" prefWidth="200.0" progress="0.0" />
                         <Label fx:id="playerTime" prefHeight="25.0" />
@@ -37,7 +37,7 @@
                      <children>
                         <Button fx:id="revertButton" mnemonicParsing="false" prefWidth="60.0" text="Revert" />
                         <Button fx:id="drawButton" mnemonicParsing="false" prefWidth="60.0" text="Draw" />
-                        <Button fx:id="resignButton" mnemonicParsing="false" prefWidth="60.0" text="Resign" />
+                        <Button fx:id="resignButton" mnemonicParsing="false" onMouseClicked="#resign" prefWidth="60.0" text="Resign" />
                      </children>
                   </HBox>
                </children>
