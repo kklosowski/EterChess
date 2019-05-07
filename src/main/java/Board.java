@@ -27,15 +27,15 @@ public class Board {
         castle = new HashMap<>();
         initConstants();
 
-//        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
-        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000001111111100000000L);
+//        pieces.put("whitePawns", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("whiteKnights", 0b0000000000000000000000000000000000000000000000000000000001000010L);
         pieces.put("whiteBishops", 0b0000000000000000000000000000000000000000000000000000000000100100L);
         pieces.put("whiteRooks", 0b0000000000000000000000000000000000000000000000000000000010000001L);
         pieces.put("whiteQueens", 0b0000000000000000000000000000000000000000000000000000000000001000L);
         pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
 
-//        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
+        pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
 //        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
 //        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
 //        pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
@@ -46,7 +46,7 @@ public class Board {
         pieces.put("blackRooks", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackBishops", 0b0000000000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackKnights", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackPawns", 0b0000000000011111000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackPawns", 0b0000000000011111000000000000000000000000000000000000000000000000L);
 
         castle.put('K', true);
         castle.put('Q', true);
@@ -275,7 +275,6 @@ public class Board {
 
     }
 
-
     public void move(long start, long target) {
 
         //Takedown
@@ -392,8 +391,9 @@ public class Board {
                 blackKingDanger = kingDangerSquares(BLACK) | protectedCheckers[0];
             } else {
                 //Filter for protected piece danger
-                blackKingDanger = whiteAttacks;
+                blackKingDanger = whiteAttacks | kingDangerSquares(BLACK);
             }
+
         } else {
             blackAttacks = allAttacks(BLACK);
             if (isInCheck(WHITE)) {
@@ -410,7 +410,7 @@ public class Board {
                 whiteKingDanger = kingDangerSquares(WHITE) | protectedCheckers[0];
             } else {
                 //Filter for protected piece danger
-                whiteKingDanger = blackAttacks;
+                whiteKingDanger = blackAttacks | kingDangerSquares(WHITE);
             }
         }
 
@@ -418,7 +418,7 @@ public class Board {
         movingColor = !movingColor;
 
 //        System.out.println(toString());
-        System.out.println(toFEN());
+//        System.out.println(toFEN());
     }
 
     public long getMoves(long square) {
@@ -448,7 +448,6 @@ public class Board {
         } else if (pieceType.contains("queen")) {
             moves = queenMoves(square, this.movingColor);
         } else moves = 0L;
-
 
         if (isInCheck(movingColor)) {
             if (Conversions.bitCount(getCheckingPieces(movingColor)) > 1) {
@@ -696,8 +695,16 @@ public class Board {
                 }
             }
         }
-
         return moves & ~colorPieces(color) & ~kingDanger;
+    }
+
+    private long kingMovesWithIllegal(long positions, boolean color){
+        long moves = 0L;
+        moves |= ((positions << 9) | (positions >>> 7) | (positions << 1)) & ~constants.get("aFile");
+        moves |= ((positions << 7) | (positions >>> 9) | (positions >>> 1)) & ~constants.get("hFile");
+        moves |= (positions << 8) | (positions >>> 8);
+        System.out.println(Conversions.longToGrid(moves));
+        return moves;
     }
 
     public long allAttacks(boolean color) {
@@ -724,13 +731,13 @@ public class Board {
 
     public long kingDangerSquares(boolean color) {
         String kingKey = color ? "whiteKings" : "blackKings";
-
+        String opponentKingKey = !color ? "whiteKings" : "blackKings";
         //Temporarily remove the king to calculate danger squares
         long kingTemp = pieces.get(kingKey);
         pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
         long dangerSquares = allAttacks(!color);
         pieces.compute(kingKey, (k, v) -> v ^ kingTemp);
-
+        dangerSquares |= kingMovesWithIllegal(pieces.get(opponentKingKey), !color);
         return dangerSquares;
     }
 
@@ -767,10 +774,12 @@ public class Board {
 //        return possibleMoves;
 //    }
 
-    public void promotion(String promotionType, long square, boolean color) {
+    public void promotion(String promotionType, long startPosition, long targetPosition, boolean color) {
+
         String col = color ? "white" : "black";
-        pieces.compute(col + "Pawns", (k, v) -> v ^ square);
-        pieces.compute(promotionType, (k, v) -> v | square);
+        pieces.compute(col + "Pawns", (k, v) -> v ^ startPosition);
+        pieces.compute(promotionType, (k, v) -> v | startPosition);
+        move(startPosition, targetPosition);
     }
 
     public long getCheckingPieces(boolean color) {
@@ -901,4 +910,8 @@ public class Board {
         return movesByPiece;
     }
 
+    public boolean isPromotion(long x, long y, boolean color) {
+        String col = color ? "white" : "black";
+        return (pieces.get(col + "Pawns") & x) != 0L && (constants.get("1Rank") & y) != 0L;
+    }
 }

@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -53,20 +55,23 @@ public class BoardController {
 
     private HashMap<String, Long> boardControls = new HashMap<>();
 
-    private Timer[] timers;
+    private TimeControl[] timeControls;
 
-//    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
+    private Timer timer;
+
+    //    private Board board = new Board("3k1bn1/p4p2/Ppp1p2p/1n3P1p/3p3P/N1PP4/P1QBPP1B/2Kr2N1 w - - 1 11");
     private Board board;
 
     private AiPlayer aiPlayer;
 
     @FXML
     public void initialize() {
-         board = new Board();
+        board = new Board();
+        aiPlayer = new AiPlayer();
         showNewGameDialog();
         initPlayer();
         initTimers();
-//        startTimer();
+        startTimer(timer);
         drawBoard(boardCanvas.getGraphicsContext2D());
         drawPieces(root);
     }
@@ -165,10 +170,11 @@ public class BoardController {
                             if (type.contains("Pawn")
                                     && (((targetPosition & board.getConstants().get("8Rank")) != 0)
                                     || (targetPosition & board.getConstants().get("1Rank")) != 0)) {
-                                drawPromotion(board.movingColor, targetPosition);
+                                drawPromotion(board.movingColor,selectedPosition, targetPosition);
+                            } else {
+                                incrementTimer(board.movingColor);
+                                board.move(selectedPosition, targetPosition);
                             }
-
-                            board.move(selectedPosition, targetPosition);
 
                             p.setId(p.getId().split("#")[0] + "#" + Conversions.posToSquare(targetPosition));
                             ((Group) root.getScene().lookup("#moveGroup")).getChildren().clear();
@@ -178,7 +184,8 @@ public class BoardController {
                             //MOVE OF AN AI PLAYER
                             if (aiPlayer != null && !board.movingColor){
                                 Platform.runLater(() -> {
-                                        aiPlayer.randomMove(board);
+                                        incrementTimer(board.movingColor);
+                                        aiPlayer.neuralNetworkMove(board);
                                         drawPieces(root);
                                 });
                             }
@@ -195,25 +202,31 @@ public class BoardController {
             }
         });
 
-        //Check glow
-        String king = (board.movingColor ? "white" : "black") + "Kings";
-        String kingPos = Conversions.posToSquare(Conversions.longToBitIndex(board.pieces.get(king)));
-        ImageView kingIV = (ImageView) pieceGroup.lookup("#" + king.substring(0, king.length() - 1) + "#" + kingPos);
+        handleCheck(board.movingColor);
 
-        if (board.isInCheck(board.movingColor)) {
-            kingIV.setEffect(new DropShadow(40, Color.RED));
-            if (board.allMoves(board.movingColor).isEmpty()){
-                showWinDialog(board.movingColor);
-            }
-        } else {
-            kingIV.setEffect(null);
-            if (board.allMoves(board.movingColor).isEmpty()){
-                showDrawDialog();
-            }
-        }
 //        board.getPinnedPieceMoveMasks(board.movingColor);
 //        System.out.println(Conversions.longToGrid(board.getCheckingPieces(board.movingColor)));
 //        System.out.println(Conversions.longToGrid(board.checkBlockMask));
+    }
+
+    public void handleCheck(boolean color){
+        String king = (color ? "white" : "black") + "Kings";
+        String kingPos = Conversions.posToSquare(Conversions.longToBitIndex(board.pieces.get(king)));
+        ImageView kingIV = (ImageView) pieceGroup.lookup("#" + king.substring(0, king.length() - 1) + "#" + kingPos);
+
+        if (board.isInCheck(color)) {
+            kingIV.setEffect(new DropShadow(40, Color.RED));
+            if (board.allMoves(color).isEmpty()){
+                timer.cancel();
+                showWinDialog(!color);
+            }
+        } else {
+            kingIV.setEffect(null);
+            if (board.allMoves(color).isEmpty()){
+                timer.cancel();
+                showDrawDialog();
+            }
+        }
     }
 
     public void showNewGameDialog() {
@@ -262,7 +275,7 @@ public class BoardController {
         }
     }
 
-    public void drawPromotion(boolean color, long square) {
+    public void drawPromotion(boolean color, long selectedPosition ,long targetPosition) {
         String col = color ? "white" : "black";
         Pane promotionPane = new Pane();
         promotionPane.setBackground(new Background(new BackgroundFill(Color.STEELBLUE, null, null)));
@@ -290,9 +303,21 @@ public class BoardController {
                     p.setOnMouseEntered(mouseEvent -> p.setCursor(Cursor.HAND));
                     p.setOnMouseClicked(mouseEvent -> {
                         String promotionType = ((ImageView) mouseEvent.getSource()).getId();
-                        board.promotion(promotionType.split("#")[0], square, !board.movingColor);
+                        board.promotion(promotionType.split("#")[0],selectedPosition, targetPosition, board.movingColor);
                         promotionPane.getChildren().clear();
+
+//                        System.out.println("hc: " + board.movingColor);
+                        incrementTimer(board.movingColor);
                         drawPieces(root);
+
+                        //MOVE OF AN AI PLAYER
+                        if (aiPlayer != null && !board.movingColor){
+                            Platform.runLater(() -> {
+                                incrementTimer(board.movingColor);
+                                aiPlayer.neuralNetworkMove(board);
+                                drawPieces(root);
+                            });
+                        }
                     });
                     promotionPane.getChildren().add(p);
                 });
@@ -300,30 +325,67 @@ public class BoardController {
     }
 
     public void initTimers(){
-        timers = new Timer[]{new Timer(), new Timer()};
-        timers[0].increment = boardControls.get("time");
-        timers[1].increment = boardControls.get("time");
+        this.timer = new Timer();
 
-        timers[0].timeLeft = boardControls.get("time");
-        timers[1].timeLeft = boardControls.get("time");
+        timeControls = new TimeControl[]{new TimeControl(), new TimeControl()};
+        timeControls[0].increment = boardControls.get("increment");
+        timeControls[1].increment = boardControls.get("increment");
+
+        timeControls[0].timeLeft = boardControls.get("time");
+        timeControls[1].timeLeft = boardControls.get("time");
+
+        timeControls[0].timeStart = boardControls.get("time");
+        timeControls[1].timeStart = boardControls.get("time");
 
         playerTimeProgress.setProgress(1d);
         computerTimeProgress.setProgress(1d);
 
-        playerTime.setText(formatTime(timers[0].timeLeft));
-        computerTime.setText(formatTime(timers[0].timeLeft));
+        playerTime.setText(formatTime(timeControls[0].timeLeft));
+        computerTime.setText(formatTime(timeControls[0].timeLeft));
     }
 
-    public void startTimer(){
-        int moving = board.movingColor ? 1 : 0;
-        while(timers[moving].timeLeft > 0){
-            Platform.runLater(() -> {
+    public void startTimer(Timer timer){
+        TimerTask task = new TimerTask()
+        {
+            public void run()
+            {
+                int moving = board.movingColor ? 1 : 0;
+                timeControls[moving].timeLeft -= 500;
+                if (timeControls[moving].timeLeft > 0){
+                    Platform.runLater(() -> {
+                        renderTimeChange(moving);
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        timer.cancel();
+                        showWinDialog(!board.movingColor);
+                    });
+                }
+            }
+        };
 
-                    timers[moving].timeLeft -= 1000;
-                    playerTime.setText(formatTime(timers[moving].timeLeft));
-            });
+        timer.scheduleAtFixedRate(task, 0, 500);
+    }
+
+    public void renderTimeChange(int moving){
+        switch (moving){
+            case 0:
+                computerTime.setText(formatTime(timeControls[moving].timeLeft));
+                computerTimeProgress.setProgress((double) timeControls[moving].timeLeft / timeControls[moving].timeStart);
+                break;
+            case 1:
+                playerTime.setText(formatTime(timeControls[moving].timeLeft));
+                playerTimeProgress.setProgress((double)timeControls[moving].timeLeft / timeControls[moving].timeStart);
+                break;
         }
-//        System.out.println("setting timer " + (color ? "white" : "black"));
+    }
+
+    public void incrementTimer(boolean color) {
+        int moving = color ? 1 : 0;
+        Platform.runLater(() -> {
+            timeControls[moving].timeLeft += timeControls[moving].increment;
+            renderTimeChange(moving);
+        });
     }
 
     private String formatTime(long millis){

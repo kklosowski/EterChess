@@ -35,7 +35,7 @@
                   <Label fx:id="timeLabel" text="5" />
                </children>
             </HBox>
-            <Slider fx:id="timeSlider" max="180.0" minorTickCount="1" snapToTicks="true" value="5.0">
+            <Slider fx:id="timeSlider" max="180.0" min="1.0" minorTickCount="1" value="5.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></Slider>
@@ -48,7 +48,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </HBox>
-            <Slider fx:id="incrementSlider" layoutX="40.0" layoutY="107.0" max="180.0" min="1.0" minorTickCount="1" snapToTicks="true" value="10.0">
+            <Slider fx:id="incrementSlider" layoutX="40.0" layoutY="107.0" max="180.0" min="1.0" minorTickCount="1" value="10.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></Slider>

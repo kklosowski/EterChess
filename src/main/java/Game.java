@@ -1,9 +1,9 @@
 public class Game {
     BoardController boardController;
-    Timer timer;
+    TimeControl timeControl;
 
-    public Game(BoardController boardController, Timer timer) {
+    public Game(BoardController boardController, TimeControl timeControl) {
         this.boardController = boardController;
-        this.timer = timer;
+        this.timeControl = timeControl;
     }
 }

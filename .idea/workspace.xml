@@ -2,23 +2,22 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/main/java/Board.java" />
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/Board.java" line="234" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24705422-76d3-42b0-9f4c-28857fa9ab71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/AiPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Tuple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AiPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AiPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/NewGameDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/NewGameDialogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Timer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Timer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/board.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/board.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Timer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TimeControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AiPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AiPlayer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/BoardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BoardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/NewGameDialogController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/NewGameDialogController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Timer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Timer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/views/board.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/views/board.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Timer.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/views/new_game_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/views/new_game_dialog.fxml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,35 +33,12 @@
     <SUITE FILE_PATH="coverage/EterChess$Main.ic" NAME="Main Coverage Results" MODIFIED="1557004227256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/EterChess$Evaluation.ic" NAME="Evaluation Coverage Results" MODIFIED="1532896773767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="435">
-                    <caret line="183" column="29" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
-                    <folding>
-                      <element signature="e#8569#8570#0" expanded="true" />
-                      <element signature="e#8598#8599#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
+            <state relative-caret-position="323">
               <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -74,23 +50,38 @@
       <file leaf-file-name="BoardController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="649">
-              <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+            <state relative-caret-position="564">
+              <caret line="376" column="78" lean-forward="true" selection-start-line="376" selection-start-column="78" selection-end-line="376" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#initPlayer#0;class#BoardController#0" />
                 <element signature="method#drawBoard#0;class#BoardController#0" />
                 <element signature="method#drawMoves#0;class#BoardController#0" />
-                <element signature="e#4949#5495#0" />
-                <element signature="e#5539#5728#0" />
-                <element signature="method#showNewGameDialog#0;class#BoardController#0" />
-                <element signature="method#showDrawDialog#0;class#BoardController#0" />
-                <element signature="method#showWinDialog#0;class#BoardController#0" />
-                <element signature="method#drawPromotion#0;class#BoardController#0" />
                 <element signature="method#formatTime#0;class#BoardController#0" />
-                <element signature="e#12523#12524#0" expanded="true" />
-                <element signature="e#12572#12573#0" expanded="true" />
+                <element signature="e#15043#15044#0" expanded="true" />
+                <element signature="e#15091#15092#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scratch.java" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" selection-start-line="13" selection-end-line="15" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -98,8 +89,8 @@
       <file leaf-file-name="AiPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/AiPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            <state relative-caret-position="318">
+              <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,23 +98,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="board.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/views/board.fxml">
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-          <provider editor-type-id="text-editor" />
+      <file leaf-file-name="Tuple.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Tuple.java">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="new_game_dialog.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml">
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-          <provider editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="FXMLLoader.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38318">
-              <caret line="2408" selection-start-line="2408" selection-end-line="2408" />
+            <state relative-caret-position="318">
+              <caret line="697" selection-start-line="697" selection-end-line="697" />
+              <folding>
+                <element signature="e#2947#2988#0" />
+                <element signature="e#3138#3681#0" />
+                <element signature="e#5133#5231#0" />
+                <element signature="e#8569#8570#0" expanded="true" />
+                <element signature="e#8598#8599#0" expanded="true" />
+                <element signature="e#8777#9164#0" />
+                <element signature="e#9170#9892#0" />
+                <element signature="e#9348#9658#0" />
+                <element signature="e#9898#11457#0" />
+                <element signature="e#11463#11505#0" />
+                <element signature="e#11652#12121#0" />
+                <element signature="e#12179#13157#0" />
+                <element signature="e#13318#15902#0" />
+                <element signature="e#15960#16182#0" />
+                <element signature="e#17490#17781#0" />
+                <element signature="e#20029#20823#0" />
+                <element signature="e#20829#21862#0" />
+                <element signature="e#21868#22643#0" />
+                <element signature="e#22649#23870#0" />
+                <element signature="e#23876#24783#0" />
+                <element signature="e#24789#25480#0" />
+                <element signature="e#25486#25930#0" />
+                <element signature="e#25936#26074#0" />
+                <element signature="e#29981#30690#0" />
+                <element signature="e#30696#32192#0" />
+                <element signature="e#30950#32157#0" />
+                <element signature="e#32198#33866#0" />
+                <element signature="e#32768#33216#0" />
+                <element signature="e#33326#33790#0" />
+                <element signature="e#35195#35235#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -131,7 +147,7 @@
       <file leaf-file-name="Conversions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-480">
+            <state relative-caret-position="136">
               <caret line="13" selection-start-line="13" selection-end-line="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -142,34 +158,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewGameDialogController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/NewGameDialogController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1356#1357#0" expanded="true" />
-                <element signature="e#1404#1405#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+              <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Timer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Timer.java">
+      <file leaf-file-name="TimeControl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/TimeControl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -186,15 +188,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getMoves</find>
-      <find>colorPieces(color)</find>
-      <find>private</find>
-      <find>Board.Delta</find>
-      <find>return</find>
-      <find>Fen</find>
-      <find>sys</find>
-      <find>promotion</find>
-      <find>System.out.println(&quot;PROMOTION</find>
       <find>System.out.println</find>
       <find>whiteKing</find>
       <find>checkers</find>
@@ -211,11 +204,20 @@
       <find>allMoves</find>
       <find>getCheckingPieces(BLACK)</find>
       <find>&lt;&lt;</find>
-      <find>system</find>
       <find>block</find>
       <find>fenSplit[0]</find>
       <find>checkmate</find>
       <find>system.out</find>
+      <find>promoti</find>
+      <find>promotion</find>
+      <find>neural</find>
+      <find>system</find>
+      <find>isinche</find>
+      <find>if (aiPlayer != null</find>
+      <find>todo</find>
+      <find>resign</find>
+      <find>println</find>
+      <find>whiteAttac</find>
     </findStrings>
     <replaceStrings>
       <replace>piece</replace>
@@ -246,16 +248,20 @@
         <option value="$PROJECT_DIR$/src/main/java/Point.java" />
         <option value="$PROJECT_DIR$/src/main/java/Conversions.java" />
         <option value="$PROJECT_DIR$/src/main/java/Evaluation.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Game.java" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/TimeControls.java" />
         <option value="$PROJECT_DIR$/src/main/java/Timer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Board.java" />
         <option value="$PROJECT_DIR$/src/main/resources/views/board.fxml" />
-        <option value="$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/NewGameDialogController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TimeControl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Touple.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Tuple.java" />
         <option value="$PROJECT_DIR$/src/main/java/AiPlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Board.java" />
         <option value="$PROJECT_DIR$/src/main/java/BoardController.java" />
       </list>
     </option>
@@ -276,9 +282,9 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="55" />
-    <option name="width" value="2185" />
+    <option name="width" value="1703" />
     <option name="height" value="1447" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -287,9 +293,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -328,12 +331,32 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EterChess" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EterChess" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EterChess" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="EterChess" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,11 +376,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.build.tools" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\eterd\Desktop\EterChess\src\main\resources\models" />
+      <recent name="C:\Users\eterd\Desktop\EterChess\src\main\resources\pieces" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\eterd\Desktop\EterChess\src\main\resources\pieces" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -402,6 +426,9 @@
       </option>
       <patterns />
     </configuration>
+    <configuration name="Scratch" type="Java Scratch" factoryName="Java Scratch" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Scratch" />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -427,10 +454,12 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Evaluation" />
+      <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="Application.Evaluation" />
       </list>
     </recent_temporary>
@@ -462,12 +491,15 @@
       <workItem from="1556911244356" duration="1140000" />
       <workItem from="1556973386127" duration="5318000" />
       <workItem from="1556979301450" duration="7022000" />
-      <workItem from="1556989414318" duration="9644000" />
+      <workItem from="1556989414318" duration="12050000" />
+      <workItem from="1557074065899" duration="1211000" />
+      <workItem from="1557156058060" duration="4022000" />
+      <workItem from="1557162604149" duration="11339000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250478000" />
+    <option name="totallyTimeSpent" value="269456000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -479,7 +511,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="0" width="2185" height="1447" extended-state="0" />
+    <frame x="55" y="0" width="1703" height="1447" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -493,7 +525,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39954165" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22001527" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32925898" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32925898" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
@@ -501,18 +533,18 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2131398" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32894117" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32985386" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16564706" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32925898" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17224589" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32894117" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +555,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="38" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
+          <line>739</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="43" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -568,15 +608,9 @@
             <element signature="method#initPlayer#0;class#BoardController#0" />
             <element signature="method#drawBoard#0;class#BoardController#0" />
             <element signature="method#drawMoves#0;class#BoardController#0" />
-            <element signature="e#4949#5495#0" />
-            <element signature="e#5539#5728#0" />
-            <element signature="method#showNewGameDialog#0;class#BoardController#0" />
-            <element signature="method#showDrawDialog#0;class#BoardController#0" />
-            <element signature="method#showWinDialog#0;class#BoardController#0" />
-            <element signature="method#drawPromotion#0;class#BoardController#0" />
             <element signature="method#formatTime#0;class#BoardController#0" />
-            <element signature="e#12523#12524#0" expanded="true" />
-            <element signature="e#12572#12573#0" expanded="true" />
+            <element signature="e#15043#15044#0" expanded="true" />
+            <element signature="e#15091#15092#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -801,13 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Point.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -833,50 +860,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
           <caret line="233" column="45" selection-start-line="233" selection-start-column="45" selection-end-line="233" selection-end-column="45" />
-          <folding>
-            <element signature="e#9180#9181#0" expanded="true" />
-            <element signature="e#9223#9224#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Timer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/views/board.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-      <provider editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/views/new_game_dialog.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/NewGameDialogController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
+        <state relative-caret-position="748">
           <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1356#1357#0" expanded="true" />
-            <element signature="e#1404#1405#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Conversions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-480">
+        <state relative-caret-position="136">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -888,7 +887,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="323">
           <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -896,21 +895,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TimeControl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Tuple.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="15" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="183" column="29" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
+        <state relative-caret-position="318">
+          <caret line="697" selection-start-line="697" selection-end-line="697" />
           <folding>
+            <element signature="e#2947#2988#0" />
+            <element signature="e#3138#3681#0" />
+            <element signature="e#5133#5231#0" />
             <element signature="e#8569#8570#0" expanded="true" />
             <element signature="e#8598#8599#0" expanded="true" />
+            <element signature="e#8777#9164#0" />
+            <element signature="e#9170#9892#0" />
+            <element signature="e#9348#9658#0" />
+            <element signature="e#9898#11457#0" />
+            <element signature="e#11463#11505#0" />
+            <element signature="e#11652#12121#0" />
+            <element signature="e#12179#13157#0" />
+            <element signature="e#13318#15902#0" />
+            <element signature="e#15960#16182#0" />
+            <element signature="e#17490#17781#0" />
+            <element signature="e#20029#20823#0" />
+            <element signature="e#20829#21862#0" />
+            <element signature="e#21868#22643#0" />
+            <element signature="e#22649#23870#0" />
+            <element signature="e#23876#24783#0" />
+            <element signature="e#24789#25480#0" />
+            <element signature="e#25486#25930#0" />
+            <element signature="e#25936#26074#0" />
+            <element signature="e#29981#30690#0" />
+            <element signature="e#30696#32192#0" />
+            <element signature="e#30950#32157#0" />
+            <element signature="e#32198#33866#0" />
+            <element signature="e#32768#33216#0" />
+            <element signature="e#33326#33790#0" />
+            <element signature="e#35195#35235#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AiPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        <state relative-caret-position="318">
+          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -919,22 +980,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BoardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="649">
-          <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+        <state relative-caret-position="564">
+          <caret line="376" column="78" lean-forward="true" selection-start-line="376" selection-start-column="78" selection-end-line="376" selection-end-column="78" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#initPlayer#0;class#BoardController#0" />
             <element signature="method#drawBoard#0;class#BoardController#0" />
             <element signature="method#drawMoves#0;class#BoardController#0" />
-            <element signature="e#4949#5495#0" />
-            <element signature="e#5539#5728#0" />
-            <element signature="method#showNewGameDialog#0;class#BoardController#0" />
-            <element signature="method#showDrawDialog#0;class#BoardController#0" />
-            <element signature="method#showWinDialog#0;class#BoardController#0" />
-            <element signature="method#drawPromotion#0;class#BoardController#0" />
             <element signature="method#formatTime#0;class#BoardController#0" />
-            <element signature="e#12523#12524#0" expanded="true" />
-            <element signature="e#12572#12573#0" expanded="true" />
+            <element signature="e#15043#15044#0" expanded="true" />
+            <element signature="e#15091#15092#0" expanded="true" />
           </folding>
         </state>
       </provider>
