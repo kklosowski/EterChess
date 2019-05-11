@@ -1,27 +1,27 @@
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.*;
 
-import org.deeplearning4j.nn.modelimport.keras.KerasModelImport;
-import org.deeplearning4j.nn.modelimport.keras.exceptions.InvalidKerasConfigurationException;
-import org.deeplearning4j.nn.modelimport.keras.exceptions.UnsupportedKerasConfigurationException;
+import org.apache.commons.io.IOUtils;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.linalg.cpu.nativecpu.NDArray;
 import org.nd4j.linalg.factory.Nd4j;
-import org.nd4j.linalg.io.ClassPathResource;
+
+
+import javax.script.*;
 
 public class AiPlayer {
-
-    MultiLayerNetwork model;
-
-
-    public AiPlayer() {
-        try {
-            String simpleMlp = new ClassPathResource("models/chessNN.h5").getFile().getPath();
-            this.model = KerasModelImport.importKerasSequentialModelAndWeights(simpleMlp);
-        } catch (IOException | InvalidKerasConfigurationException | UnsupportedKerasConfigurationException e) {
-            e.printStackTrace();
+    public double[] jsonArrayToDoubleArray(int size, JSONArray jsonArray){
+        double[] doubleArray = new double[size];
+        for (int i = 0; i < size; i++) {
+            doubleArray[i] = jsonArray.optDouble(i);
         }
+        return doubleArray;
     }
 
     public void randomMove(Board board){
@@ -40,19 +40,30 @@ public class AiPlayer {
         }
     }
 
+    public double[] getPredictions(String board){
+        JSONArray json = null;
+        try {
+            json = new JSONArray(IOUtils.toString(new URL("http://127.0.0.1:5000/" + board), Charset.forName("UTF-8")));
+            return jsonArrayToDoubleArray(json.length(), json);
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void neuralNetworkMove(Board board){
-        INDArray features = boardToFeatureMap(board);
-        INDArray output = model.output(features);
-        double[] predictions = output.toDoubleVector();
+        double[] predictions = getPredictions(boardToInput(board));
         Map<Integer, Double> predictionsMap = new HashMap<>();
         List<Integer> legalMoveIndices = getLegalMoveIndices(board);
         for (int i = 0; i < predictions.length; i++) {
             predictionsMap.put(i, predictions[i]);
         }
 
+        System.out.println(top3Moves(predictionsMap, legalMoveIndices));
+
         int moveIndex = predictionsMap.entrySet().stream()
                 .filter(x -> legalMoveIndices.contains(x.getKey()))
-                .min(Map.Entry.comparingByValue())
+                .max(Map.Entry.comparingByValue())
                 .get().getKey();
         Tuple<Long, Long> parsedMove = parseIndexToMove(moveIndex);
 
@@ -60,14 +71,18 @@ public class AiPlayer {
             String color = board.movingColor ? "white" : "black";
             board.promotion(color + "Queens", parsedMove.x, parsedMove.y, board.movingColor);
         } else {
-            System.out.println("KING IN CHECK: " + board.isInCheck(board.movingColor) + "color:" + board.movingColor);
-//            System.out.println(board.toString());
-//            System.out.println(Conversions.longToGrid(board.whiteAttacks));
             board.move(parsedMove.x, parsedMove.y);
-            System.out.println("AI MOVE");
         }
-//        System.out.println(output.maxNumber());
-//        getLegalMoveIndices(board).forEach(System.out::println);
+    }
+
+    private String top3Moves(Map<Integer, Double> predictionsMap, List<Integer> legalMoveIndices){
+        StringBuilder sb = new StringBuilder();
+        predictionsMap.entrySet().stream()
+                .filter(x -> legalMoveIndices.contains(x.getKey()))
+                .sorted(Map.Entry.comparingByValue())
+                .limit(20)
+                .forEach(x -> sb.append(Conversions.longToSquare(parseIndexToMove(x.getKey()).x)).append(Conversions.longToSquare(parseIndexToMove(x.getKey()).y)).append(" - ").append(x.getValue()*100).append("  |  "));
+        return sb.toString();
     }
 
     private Tuple<Long, Long> parseIndexToMove(int index){
@@ -78,11 +93,8 @@ public class AiPlayer {
         return new Tuple<>(1L << start, 1L << end);
     }
 
-    private INDArray boardToFeatureMap(Board board){
-        INDArray features = Nd4j.zeros(769);
-        for (int i=0; i < 769; i++)
-            features.putScalar(new int[] {i}, Math.random() < 0.5 ? 0 : 1);
-        return features;
+    private String boardToInput(Board board){
+        return  board.toString().replace("\n","").replace("\r", "");
     }
 
 

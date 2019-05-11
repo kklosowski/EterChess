@@ -36,16 +36,16 @@ public class Board {
         pieces.put("whiteKings", 0b0000000000000000000000000000000000000000000000000000000000010000L);
 
         pieces.put("blackPawns", 0b0000000011111111000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
-//        pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackKnights", 0b0100001000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackBishops", 0b0010010000000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackRooks", 0b1000000100000000000000000000000000000000000000000000000000000000L);
+        pieces.put("blackQueens", 0b0000100000000000000000000000000000000000000000000000000000000000L);
         pieces.put("blackKings", 0b0001000000000000000000000000000000000000000000000000000000000000L);
 
-        pieces.put("blackQueens", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackRooks", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackBishops", 0b0000000000000000000000000000000000000000000000000000000000000000L);
-        pieces.put("blackKnights", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackQueens", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackRooks", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackBishops", 0b0000000000000000000000000000000000000000000000000000000000000000L);
+//        pieces.put("blackKnights", 0b0000000000000000000000000000000000000000000000000000000000000000L);
 //        pieces.put("blackPawns", 0b0000000000011111000000000000000000000000000000000000000000000000L);
 
         castle.put('K', true);
@@ -55,7 +55,7 @@ public class Board {
 
 //        pieceSymbols.put("moves", '*');
 //        pieces.put("moves", knightMoves(pieces.get("whiteKnights") | pieces.get("blackKnights")));
-        System.out.println(toFEN());
+//        System.out.println(toFEN());
     }
 
     public Board(Board toCopy) {
@@ -210,7 +210,7 @@ public class Board {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("0000000000000000000000000000000000000000000000000000000000000000");
+        StringBuilder sb = new StringBuilder("................................................................");
         pieces.forEach((key, value) -> {
             String piece = Conversions.longToString(value).replace('1', pieceSymbols.get(key));
             for (int i = 0; i < piece.length(); i++) {
@@ -703,7 +703,7 @@ public class Board {
         moves |= ((positions << 9) | (positions >>> 7) | (positions << 1)) & ~constants.get("aFile");
         moves |= ((positions << 7) | (positions >>> 9) | (positions >>> 1)) & ~constants.get("hFile");
         moves |= (positions << 8) | (positions >>> 8);
-        System.out.println(Conversions.longToGrid(moves));
+//        System.out.println(Conversions.longToGrid(moves));
         return moves;
     }
 
